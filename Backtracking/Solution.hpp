@@ -2,7 +2,7 @@
 #define SOLUTION_HPP
 
 /** 
- * @brief N-Queens
+ * @brief N-Queens Problem
  * 
  * @param n represent nxn chess. It is also the required number of queens
  * 
@@ -30,7 +30,7 @@ private:
         return false;
     }
     void PlaceNQueens(int n, int y, int x) {
-        // Base case: y >= n
+        //* Base case: y >= n
         if (y >= n) return;
         // If y == n-1, increment ans
         if (y == n - 1) {
@@ -41,8 +41,8 @@ private:
         xSet[x] = y;
         ySet.insert(y);
         diagonal.insert(x-y);
-        // Check collision in every next index
-        // If not collided, call to recursive func 
+        //* Check collision in every next index
+        //* If not collided, call to recursive func 
         for (int i = 0; i < n; i++) {
             if (i == x) continue;
             if (!checkCollided(y+1, i, n)) {
@@ -71,7 +71,7 @@ public:
 };
 
 /**
- * @brief Word Search 
+ * @brief Word Search Problem
  * 
  * @param word target word
  * @param grid 2-dimensional grid, target word will searched in this grid
@@ -87,7 +87,7 @@ private:
     string word;
     bool dfs(vector<vector<int>>& visited, vector<vector<char>>& grid, 
              string& word, int wordIndex, int row, int col) {
-        // Base case
+        //* Base case
         // index is out of grid's scope
         // If we reach the last char of the word, return true
         // If the cell is marked or wordChar != cell, return false
@@ -96,7 +96,7 @@ private:
         if (visited[row][col] == 1 || word[wordIndex] != grid[row][col]) return false;
         // Mark the cell as visited
         visited[row][col] = 1;
-        // Call to recursive function in 4 grid's directions
+        //* Call to recursive function in 4 grid's directions
         bool left, right, up, down;
         left = dfs(visited, grid, word, wordIndex+1, row, col-1);
         right = dfs(visited, grid, word, wordIndex+1, row, col+1);
@@ -132,7 +132,7 @@ public:
 };
 
 /** 
- * @brief House Robber III
+ * @brief House Robber Problem
 */
 class HouseRobberIII
 {
