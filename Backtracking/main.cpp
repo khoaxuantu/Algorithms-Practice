@@ -3,8 +3,51 @@
 using namespace std;
 
 #include "Solution.hpp"
-#include "Header/TreeNode.hpp"
+#include "../Header/TreeNode.hpp"
 
+/* Input */
+// * N-Queens
+vector<int> NQueenInput {1,2,3,4,5,6,7,8,9};
+// * Word Search
+vector<vector<vector<char>>> WordSearchInput {
+    {{'E', 'D', 'X', 'I', 'W'},
+     {'P', 'U', 'F', 'M', 'Q'},
+     {'I', 'C', 'Q', 'R', 'F'},
+     {'M', 'A', 'L', 'C', 'A'},
+     {'J', 'T', 'I', 'V', 'E'}},
+
+    {{'E', 'D', 'X', 'I', 'W'},
+     {'P', 'U', 'F', 'M', 'Q'},
+     {'I', 'C', 'Q', 'R', 'F'},
+     {'M', 'A', 'L', 'C', 'A'},
+     {'J', 'T', 'I', 'V', 'E'}},
+
+    {{'H', 'E', 'C', 'M', 'L'},
+     {'W', 'L', 'I', 'E', 'U'},
+     {'A', 'R', 'R', 'S', 'N'},
+     {'S', 'I', 'I', 'O', 'R'}},
+
+    {{'C', 'Q', 'N', 'A'},
+     {'P', 'S', 'E', 'I'},
+     {'Z', 'A', 'P', 'E'},
+     {'J', 'V', 'T', 'K'}},
+
+    {{'O', 'Y', 'O', 'I'},
+     {'B', 'I', 'E', 'M'},
+     {'K', 'D', 'Y', 'R'},
+     {'M', 'T', 'W', 'I'},
+     {'Z', 'I', 'T', 'O'}}
+};
+vector<string> WSword {"EDUCATIVE", "", "WARRIOR", "SAVE", "DYNAMIC"};
+// * House Robber III
+
+
+/**
+ * @brief List of the classes corresponding to the problems:
+ *      @param NQueenI N-Queens problem
+ *      @param WordSearch Word search problem
+ *      @param HouseRobberIII House robber problem - 3rd edition
+*/
 int main(int argc, char const *argv[])
 {
     /* Start and end timing */
@@ -14,46 +57,12 @@ int main(int argc, char const *argv[])
     start = clock();
 
     /* Compiler switch */
-    int _switch = 1;
-    
-    /* Input */
-    // * N-Queens
-    vector<int> NQueenInput {1,2,3,4,5,6,7,8,9};
-    // * Word Search
-    vector<vector<vector<char>>> WordSearchInput {
-        {{'E', 'D', 'X', 'I', 'W'},
-         {'P', 'U', 'F', 'M', 'Q'},
-         {'I', 'C', 'Q', 'R', 'F'},
-         {'M', 'A', 'L', 'C', 'A'},
-         {'J', 'T', 'I', 'V', 'E'}},
+    int _switch = 1;    
 
-        {{'E', 'D', 'X', 'I', 'W'},
-         {'P', 'U', 'F', 'M', 'Q'},
-         {'I', 'C', 'Q', 'R', 'F'},
-         {'M', 'A', 'L', 'C', 'A'},
-         {'J', 'T', 'I', 'V', 'E'}},
-
-        {{'H', 'E', 'C', 'M', 'L'},
-         {'W', 'L', 'I', 'E', 'U'},
-         {'A', 'R', 'R', 'S', 'N'},
-         {'S', 'I', 'I', 'O', 'R'}},
-
-        {{'C', 'Q', 'N', 'A'},
-         {'P', 'S', 'E', 'I'},
-         {'Z', 'A', 'P', 'E'},
-         {'J', 'V', 'T', 'K'}},
-
-        {{'O', 'Y', 'O', 'I'},
-         {'B', 'I', 'E', 'M'},
-         {'K', 'D', 'Y', 'R'},
-         {'M', 'T', 'W', 'I'},
-         {'Z', 'I', 'T', 'O'}}
-    };
-    vector<string> WSword {"EDUCATIVE", "", "WARRIOR", "SAVE", "DYNAMIC"};
-    // * House Robber III
-    
-
-    /* Print output */
+    /**
+     * TODO: Modify input here 
+     * TODO: Print the output
+     */
     for (int i = 0; i < WordSearchInput.size(); i++) {
         WordSearch ws(WordSearchInput[i], WSword[i]);
         cout << boolalpha << ws.solve() << endl;

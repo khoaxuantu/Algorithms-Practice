@@ -1,22 +1,17 @@
 #if !defined(SOLUTION_HPP)
 #define SOLUTION_HPP
 
-template<typename T, class Problem>
-class Solution: public Problem
-{
-private:
-public:
-    T getAns() {
-        
-    }
-};
-
-/* 
- * N-Queens
+/** 
+ * @brief N-Queens
+ * 
+ * @param n represent nxn chess. It is also the required number of queens
+ * 
+ * @return :int: Number of ways
  */
 class NQueenI
 {
 private:
+    int n;
     int ans = 0;
     unordered_map<int, int> xSet;
     unordered_set<int> ySet;
@@ -60,10 +55,10 @@ private:
         diagonal.erase(x-y);
     }
 public:
-    NQueenI () {
-        this->ans = 0;
+    NQueenI (int n) {
+        this->n = n;
     }
-    int solve(int n) {
+    int solve() {
         if (n == 1) return 1;
         if (n == 2) return 0;
         // Traverse the 1st row, call to PlaceNQueens
@@ -75,9 +70,14 @@ public:
     }
 };
 
-/* 
- * Word Search
- */
+/**
+ * @brief Word Search 
+ * 
+ * @param word target word
+ * @param grid 2-dimensional grid, target word will searched in this grid
+ * 
+ * @return true or false
+*/
 class WordSearch
 {
 private:
@@ -131,9 +131,9 @@ public:
     }
 };
 
-/* 
- * House Robber III
- */
+/** 
+ * @brief House Robber III
+*/
 class HouseRobberIII
 {
 private:
