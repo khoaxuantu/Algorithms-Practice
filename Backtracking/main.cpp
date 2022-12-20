@@ -2,8 +2,8 @@
 
 using namespace std;
 
-#include "Solution.hpp"
 #include "../Header/TreeNode.hpp"
+#include "Solution.hpp"
 
 /* Input */
 // * N-Queens
@@ -40,6 +40,12 @@ vector<vector<vector<char>>> WordSearchInput {
 };
 vector<string> WSword {"EDUCATIVE", "", "WARRIOR", "SAVE", "DYNAMIC"};
 // * House Robber III
+vector<vector<int>> HRhouses {
+    {3,5,25,10,12,3,1},
+    {9,7,11,1,8,10,12},
+    {5,3,8,2,4,6,10,1},
+    {3}
+};
 
 
 /**
@@ -63,9 +69,13 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here 
      * TODO: Print the output
      */
-    for (int i = 0; i < WordSearchInput.size(); i++) {
-        WordSearch ws(WordSearchInput[i], WSword[i]);
-        cout << boolalpha << ws.solve() << endl;
+    for (auto arr : HRhouses) {
+        BinaryTree* tree = new BinaryTree(arr);
+        // tree->printLevelOrderTree();
+        // tree->printTree();
+        HouseRobberIII HRIII(tree->getRoot());
+        cout << HRIII.solve() << endl;
+        delete tree;
     }
     
     /* End timing */

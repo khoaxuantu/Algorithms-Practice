@@ -133,11 +133,39 @@ public:
 
 /** 
  * @brief House Robber Problem
+ * 
+ * @param root The root of the tree. The houses list is 
+ * reorganized to a binary tree, and this problem take the 
+ * tree as an input
+ * 
+ * @return The maximum profit that we can rob
 */
 class HouseRobberIII
 {
 private:
+    TreeNode* root;
+    pair<int, int> dfs(TreeNode* node) {
+        //* Base case
+        if (!node) return {0,0};
+        //* Call to recursive func
+        // Cal the sum of the children nodes
+        // Cal the sum of node and its grandchildren
+        auto childLeft = dfs(node->left);
+        auto childRight = dfs(node->right);
+
+        int childSum = childLeft.first + childRight.first;
+        int sumWithGrandchild = node->val + childLeft.second + childRight.second;
+        int returnVal = max(childSum, sumWithGrandchild);
+
+        return {returnVal, childSum};
+    }
 public:
+    HouseRobberIII(TreeNode* tree) : root(tree) {}
+    int solve() {
+        //* DFS
+        auto ans = dfs(root);
+        return max(ans.first, ans.second);
+    }
 };
 
 #endif // SOLUTION_HPP
