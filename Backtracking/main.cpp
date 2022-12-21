@@ -46,6 +46,11 @@ vector<vector<int>> HRhouses {
     {5,3,8,2,4,6,10,1},
     {3}
 };
+//* Restore IP Addresses
+vector<string> ripaS {
+    "255255255255", "00000000", "010010",
+    "201023", "12121212"
+};
 
 
 /**
@@ -63,19 +68,16 @@ int main(int argc, char const *argv[])
     start = clock();
 
     /* Compiler switch */
-    int _switch = 1;    
+    int _switch = 0;    
 
     /**
      * TODO: Modify input here 
      * TODO: Print the output
      */
-    for (auto arr : HRhouses) {
-        BinaryTree* tree = new BinaryTree(arr);
-        // tree->printLevelOrderTree();
-        // tree->printTree();
-        HouseRobberIII HRIII(tree->getRoot());
-        cout << HRIII.solve() << endl;
-        delete tree;
+    for (int i = 0; i < ripaS.size(); i++) {
+        RestoreIPAdresses RIPA(ripaS[i]);
+        vector<string> result = RIPA.solve();
+        RestoreIPAdresses::printAns(result);
     }
     
     /* End timing */

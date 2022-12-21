@@ -70,6 +70,7 @@ public:
     }
 };
 
+
 /**
  * @brief Word Search Problem
  * 
@@ -131,6 +132,7 @@ public:
     }
 };
 
+
 /** 
  * @brief House Robber Problem
  * 
@@ -165,6 +167,84 @@ public:
         //* DFS
         auto ans = dfs(root);
         return max(ans.first, ans.second);
+    }
+};
+
+
+/**
+ * @brief Restore IP Adresses
+ * 
+ * @param s input ip string
+ * 
+ * @return ip adresses
+ */
+class RestoreIPAdresses
+{
+private:
+    string s;
+    bool valid(string& segment) {
+        if (segment.size() > 3) return false;
+        if (segment[0] != '0') {
+            return stoi(segment) <= 255;
+        }
+        else {
+            return segment.size() == 1;
+        }
+        // return segment[0] != '0' ? stoi(segment) <= 255 : segment.size() == 1;
+        return false;
+    }
+    void pushToAns(int curPos, vector<string>& segments, vector<string>& ans) {
+        string finalSegment = s.substr(curPos + 1, s.size() - curPos - 1);
+        if (valid(finalSegment)) {
+            string ip;
+            for (string& segment : segments) {
+                ip += segment + '.';
+            }
+            ip += finalSegment;
+            ans.push_back(ip);
+        }
+    }
+    void checkAdresses(string& s, int prevPos, int dots, 
+                       vector<string>& segments, vector<string>& ans) 
+    {
+        int size = s.size();
+        int maxPos = min(size - 1, prevPos + 4);
+        //* PrevPos => check the next 3 digits
+        //* Get the segment, 
+            // if the segment is valid
+                // Push to segments
+                // If all dots are placed, push to ans
+                // Else move to the next segments
+                // Backtrack
+        for (int curPos = prevPos+1; curPos < maxPos; curPos++)
+        {
+            string segment = s.substr(prevPos+1, curPos - prevPos);
+            if (valid(segment)) {
+                segments.push_back(segment);
+                if (dots - 1 == 0) {
+                    pushToAns(curPos, segments, ans);
+                }
+                else {
+                    checkAdresses(s, curPos, dots - 1, segments, ans);
+                }
+                segments.pop_back();
+            }
+        }
+    }
+public:
+    RestoreIPAdresses(string input) : s(input) {}
+    vector<string> solve() {
+        vector<string> ans;
+        vector<string> segments;
+        //* Call to recursive func
+        checkAdresses(s, -1, 3, segments, ans);
+        return ans;
+    }
+    static void printAns(vector<string>& ans) {
+        for (auto ip : ans) {
+            cout << ip << " ";
+        }
+        cout << endl;
     }
 };
 
