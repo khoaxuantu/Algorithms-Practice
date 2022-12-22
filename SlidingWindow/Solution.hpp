@@ -338,4 +338,133 @@ public:
     }
 };
 
+
+/**
+ * TODO: Rewrite the solution
+ * @brief Permutation in a String
+ * 
+ * @param str the input string
+ * @param pattern the pattern string
+ * 
+ * @return true or false - if the input string contains any permutation
+ * of the pattern
+ */
+class StringPermutation
+{
+private:
+    string str;
+    string pattern;
+public:
+    StringPermutation(string& s, string& pattern) : str(s), 
+                                                    pattern(pattern) {}
+    bool solve() {
+        int windowStart = 0, matched = 0;
+        unordered_map<char, int> charFrequencyMap;
+        for (auto chr : pattern) {
+            charFrequencyMap[chr]++;
+        }
+
+        // our goal is to match all the characters from the 'charFrequencyMap' with the current window
+        // try to extend the range [windowStart, windowEnd]
+        for (int windowEnd = 0; windowEnd < str.length(); windowEnd++) {
+            char rightChar = str[windowEnd];
+            if (charFrequencyMap.find(rightChar) != charFrequencyMap.end()) {
+                // decrement the frequency of the matched character
+                charFrequencyMap[rightChar]--;
+                if (charFrequencyMap[rightChar] == 0) {  // character is completely matched
+                    matched++;
+                }
+            }
+
+            if (matched == (int)charFrequencyMap.size()) {
+                return true;
+            }
+
+            if (windowEnd >= pattern.length() - 1) {  // shrink the window
+                char leftChar = str[windowStart++];
+                if (charFrequencyMap.find(leftChar) != charFrequencyMap.end()) {
+                    if (charFrequencyMap[leftChar] == 0) {
+                        matched--;  // before putting the character back, decrement the matched count
+                    }
+                    // put the character back for matching
+                    charFrequencyMap[leftChar]++;
+                }
+            }
+        }
+
+        return false;
+    }
+};
+
+
+/**
+ * TODO: Rewire the solution
+ * @brief String anagram
+ * 
+ * @param str the input string
+ * @param pattern the pattern string
+ * 
+ * @return :vector<int>: A list of starting indices of the anagram
+ * of the pattern in the given string
+ */
+class StringAnagrams
+{
+private:
+    string str;
+    string pattern;
+public:
+    StringAnagrams(string& s, string& pattern) : str(s),
+                                                 pattern(pattern) {}
+    vector<int> solve() {
+
+    }
+};
+
+
+/**
+ * @brief Smallest Window containing Substring
+ * 
+ * @param str the input string
+ * @param pattern the pattern string
+ * 
+ * @return :string: the smallest substring in the given string 
+ * which has all the characters occurences of the given patterns 
+ */
+class MinimumWindowSubstring 
+{
+private:
+    string str;
+    string pattern;
+public:
+    MinimumWindowSubstring(string& s, string& pattern) : str(s),
+                                                         pattern(pattern) {}
+    string solve() {
+
+    }
+};
+
+
+/**
+ * @brief Words Concatenation
+ * 
+ * @param str the input string
+ * @param words the list of words
+ * 
+ * @return :vector<int>: All the starting indices of substrings in the given string
+ * that are a concatenation of all the given words exactly once without any overlapping
+ * of words
+ */
+class WordConcatenation 
+{
+private:
+    string str;
+    vector<string> words;
+public:
+    WordConcatenation(string& str, vector<string>& words) :
+        str(str), words(words) {}
+    vector<int> solve() {
+        
+    }
+};
+
 #endif // SOLUTION_HPP
