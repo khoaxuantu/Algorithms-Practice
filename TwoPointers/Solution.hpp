@@ -46,4 +46,37 @@ public:
     }
 };
 
+
+/**
+ * @brief Remove Duplicates
+ * 
+ * @param arr An array of sorted number
+ * 
+ * @return :int: the length of subarray that has no duplicate in it
+ */
+class RemoveDuplicates
+{
+private:
+    vector<int> arr;
+public:
+    RemoveDuplicates(vector<int>& arr) : arr(arr) {}
+    int solve() {
+        // TODO: Write your code here
+        int ans = 1;
+        int firstrun = 0, secondrun = 0;
+        // Traverse the arr
+        int cur = arr[0];
+        while (secondrun < arr.size())
+        {
+            if (arr[secondrun] != arr[firstrun])
+            {
+                firstrun = secondrun;
+                ans++;
+            }
+            secondrun++;
+        }
+        return ans;
+    }
+};
+
 #endif // SOLUTION_HPP
