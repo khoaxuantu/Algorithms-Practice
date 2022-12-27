@@ -185,4 +185,237 @@ private:
     }
 };
 
+
+/**
+ * @brief Triplet Sum Close to Target
+ * 
+ * @param arr An array of unsorted number
+ * @param targetSum A target number
+ * 
+ * @return :int: a sum of a triplet which is as close to 
+ * the target number as possible
+ */
+class TripletSumCloseToTarget
+{
+private:
+    vector<int> arr;
+    int targetSum;
+    pair<int, int> findClosetSum(vector<int>& arr, int index, int& targetSum) {
+        int closet = INT_MAX;
+        int closetSum = 0;
+        // Run 2 pointer in start and end
+        // If start or end are similar to the index, then increment or decrement appopriately 
+        // Get curSum of 3 point, find the minimum closet with the abs(targetSum - curSum)
+            // If get the closet which is larget than the cur one, end--
+            // Else, update the closet and start++
+            // 0 1 1 1
+        int start = 0, end = arr.size() - 1;
+        // cout << index << ": ";
+        while (start < end)
+        {
+            // cout << start << " " << end << " : ";
+            if (start == index)
+            {
+                start++;
+            }
+            else if (end == index)
+            {
+                end--;
+            }
+            else
+            {
+                int curSum = arr[start] + arr[end] + arr[index];
+                if (abs(targetSum - curSum) < closet || 
+                    abs(targetSum - curSum) == closet && targetSum - curSum > 0)
+                {
+                    closet = abs(targetSum - curSum);
+                    closetSum = curSum;
+                    start++;
+                }
+                else
+                {
+                    end--;
+                }
+            }
+            // cout << closet << " " << closetSum << " | ";
+        }
+        return make_pair(closet, closetSum);
+    }
+public:
+    TripletSumCloseToTarget(vector<int>& arr, int targetSum) :
+        arr(arr), targetSum(targetSum) {}
+    int solve() {
+        // TODO: Write your code here
+        pair<int, int> ans = {INT_MAX, INT_MIN};
+
+        // Sort the array first
+        sort(arr.begin(), arr.end());
+        // Traverse the array
+        // With each element, check the pair other than the element => Find the closet sum
+        // If ans is 0, then break, else run to the end of arr
+        for (int i = 0; i < arr.size(); i++)
+        {
+            if (ans.second == targetSum) break;
+            pair<int, int> tmp = findClosetSum(arr, i, targetSum);
+            // cout << tmp << endl;
+            if (tmp.first <= ans.first)
+            {
+                ans = tmp;
+            }
+        }
+        return ans.second;
+    }
+};
+
+
+/**
+ * @brief Triplets with Smaller Sum 
+ * 
+ * @param arr An array of unsorted number
+ * @param targetSum A target number
+ * 
+ * @return :int: All triplets in the input array arr such that 
+ * arr[i] + arr[j] +arr[k] < target where i, j, k are three 
+ * different indices
+ */
+class TripletWithSmallerSum
+{
+private:
+    vector<int> arr;
+    int targetSum;
+    int tripletsCount(vector<int>& arr, int index, int& targetSum)
+    {
+        int count = 0;
+        //* Start (= index+1) and endpoint
+        int start = index + 1, end = arr.size() - 1;
+        //* Traverse the array
+        // Get the sum = start + end + index
+        // Compare the sum with the targetSum
+            // If it is less than targetSum, increment start, count++
+            // Else decrement end
+        while (start < end)
+        {
+            int tmpSum = arr[start] + arr[end] + arr[index];
+
+            if (tmpSum < targetSum)
+            {
+                count++;
+                // cout << arr[index] << " " << arr[end] << " " << arr[start] << " | ";
+            }
+            end--;
+            if (end == start) 
+            {
+                start++;
+                end = arr.size() - 1;
+            }
+        }
+        return count;
+    }
+public:
+    TripletWithSmallerSum(vector<int>& arr, int targetSum) :
+        arr(arr), targetSum(targetSum) {}
+    int solve() {
+        int ans = 0;
+        //* Sort the array
+        sort(arr.begin(), arr.end());
+        //* Traverse the array
+        // For each element, count the triplet including it whose summation is equal to targetSum
+        for (int i = 0; i < arr.size() - 2; i++)
+        {
+            ans += tripletsCount(arr, i, targetSum);
+        }
+        return ans;
+    }
+};
+
+
+/**
+ * @brief Subarrays with Product Less than a Target
+ * 
+ * @param arr An array with positive numbers
+ * @param target A positive target number
+ * 
+ * @return :vector<vector<int>>: All of arr's contiguous subarrays whose
+ * product is less than the target number
+ */
+class SubarrayProductLessThanK
+{
+private:
+    vector<int> arr;
+    int target;
+public:
+    SubarrayProductLessThanK(vector<int>& arr, int target) :
+        arr(arr), target(target) {}
+    vector<vector<int>> solve() {
+        vector<vector<int>> ans;
+        //* Initialize 2 pointers at 0 and 1
+        // Check whether the first 2 pointers larger than target
+        // Else push into ans first
+        int left = 0, right = 1;
+        if (arr[left] < target) ans.push_back({arr[left]});
+        //* Start shrinking window
+        // Keep track the current product
+        // Push [arr[left],arr[right]] to ans if its product is less than the target, and right++
+            // current product *= arr[right]
+        // If it is larger, left++
+            // current product = current product / arr[left]
+        int currPro = arr[left] == 0 ? 1 : arr[left];
+        bool rightIncremented = false;
+        while (right < arr.size())
+        {
+            while (arr[left] > target || arr[right] > target) 
+            {
+                if (arr[right] > target)
+                {
+                    left += 2;
+                    right += 2;
+                }
+                else if (arr[left] > target)
+                {
+                    left++;
+                    right++;
+                }
+
+                if (arr[left] < target)
+                {
+                    ans.push_back({arr[left]});
+                }
+                currPro = arr[left];
+            }
+            cout << left << " " << right << " | ";
+            if (currPro * arr[right] < target)
+            {
+                if (arr[right] < target && right != left) ans.push_back({arr[right]});
+                // deal with 0
+                currPro *= (arr[right] == 0) ? 1 : arr[right];
+                // Push to the ans
+                vector<int> tmp;
+                for (int i = left; i <= right; i++)
+                {
+                    tmp.push_back(arr[i]);
+                }
+                ans.push_back(tmp);
+                right++;
+            }
+            else if (right == left)
+            {
+                right++;
+            }
+            else
+            {
+                currPro /= (arr[left] == 0) ? 1 : arr[left];
+                left++;
+            }
+        }
+        cout << endl << endl;
+        return ans; 
+    }
+};
+
+
+/**
+ * @brief 
+ * 
+ */
+
 #endif // SOLUTION_HPP
