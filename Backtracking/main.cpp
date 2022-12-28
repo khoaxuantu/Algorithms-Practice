@@ -51,6 +51,18 @@ vector<string> ripaS {
     "255255255255", "00000000", "010010",
     "201023", "12121212"
 };
+//* Sudoku Solver
+vector<vector<char>> SSBoard {
+    {'.','.','.','.','.','.','.','7','.'},
+    {'2','7','5','.','.','.','3','1','4'},
+    {'.','.','.','.','2','7','.','5','.'},
+    {'9','8','.','.','.','.','.','3','1'},
+    {'.','3','1','8','.','4','.','.','.'},
+    {'.','.','.','1','.','.','8','.','5'},
+    {'7','.','6','2','.','.','1','8','.'},
+    {'.','9','.','7','.','.','.','.','.'},
+    {'4','1','.','.','.','5','.','.','7'}
+};
 
 
 /**
@@ -74,10 +86,11 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here 
      * TODO: Print the output
      */
-    for (int i = 0; i < ripaS.size(); i++) {
-        RestoreIPAdresses RIPA(ripaS[i]);
-        vector<string> result = RIPA.solve();
-        RestoreIPAdresses::printAns(result);
+    SudokuSolver SS(SSBoard);
+    vector<vector<char>> result = SS.solve();
+    for (auto row : result) {
+        for (char& c : row) cout << c << " ";
+        cout << endl;
     }
     
     /* End timing */

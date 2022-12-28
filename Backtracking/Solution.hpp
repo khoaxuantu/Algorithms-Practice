@@ -248,4 +248,93 @@ public:
     }
 };
 
+
+/**
+ * @brief Sudoku Solver
+ * 
+ * @param board A 9x9 sudoku board
+ * 
+ * @return :vector<vector<char>>: A complete board
+ */
+class SudokuSolver
+{
+private:
+    vector<vector<char>> board;
+    unordered_map<int, unordered_set<char>> row;
+    unordered_map<int, unordered_set<char>> col;
+    unordered_map<string, unordered_set<char>> box;
+    bool validateRow(char num, int r) {
+        return row[r].find(num) == row[r].end();
+    }
+    bool validateCol(char num, int c) {
+        return col[c].find(num) == col[c].end();
+    }
+    bool validateBox(char num, string b) {
+        return box[b].find(num) == box[b].end();
+    }
+    bool tryNum(vector<vector<char>>& board, int i, int j) {
+        //* Base case
+            // If board[i][j] is invalid
+        if (i > 8 || j > 8) return false;
+        string b = to_string(i/3) + to_string(j/3);
+        if (!validateBox(board[i][j], b) || !validateCol(board[i][j], j) || 
+            !validateRow(board[i][j], i)) return false;
+        int curI = i, curJ = j;
+        //* For each cell, try 1->9 recursively
+            // Validate and add the number to row, col, box
+        //* If reach the last cell, return board
+        //* Otherwise move to the next cell
+        //* Backtrack if the solution is not reached
+        for (int n = 1; n <= 9; n++) {
+            if (validateBox(n+'0', b) && validateCol(n+'0', curJ) && validateRow(n+'0', curI)) {
+                board[curI][curJ] = n + '0';
+                row[curI].insert(board[curI][curJ]);
+                col[curJ].insert(board[curI][curJ]);
+                box[b].insert(board[curI][curJ]);
+                if (i == 8) {
+                    if (j == 8) return true;
+                    else if (j == 7 && board[i][j] != '.') return true; 
+                }
+                while (i < 9 && board[i][j] != '.') {
+                    j++;
+                    if (j > 8) {
+                        i++;
+                    }
+                    j %= 9;
+                }
+                if (tryNum(board, i, j)) return true;
+                row[curI].erase(board[curI][curJ]);
+                col[curJ].erase(board[curI][curJ]);
+                box[b].erase(board[curI][curJ]);
+            }
+        }
+        board[curI][curJ] = '.';
+        return false;
+    }
+public:
+    SudokuSolver(vector<vector<char>>& board) : board(board) {}
+    vector<vector<char>> solve() {
+        int n = board.size();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] != '.') {
+                    string b = to_string(i/3) + to_string(j/3);
+                    box[b].insert(board[i][j]);
+                    row[i].insert(board[i][j]);
+                    col[j].insert(board[i][j]);
+                }
+            }
+        }
+        //* Iterate every cell in the board
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == '.') {
+                    if (tryNum(board, i, j)) return board;
+                }
+            }
+        }
+        return board;
+    }
+};
+
 #endif // SOLUTION_HPP
