@@ -291,10 +291,6 @@ private:
                 row[curI].insert(board[curI][curJ]);
                 col[curJ].insert(board[curI][curJ]);
                 box[b].insert(board[curI][curJ]);
-                if (i == 8) {
-                    if (j == 8) return true;
-                    else if (j == 7 && board[i][j] != '.') return true; 
-                }
                 while (i < 9 && board[i][j] != '.') {
                     j++;
                     if (j > 8) {
@@ -302,6 +298,7 @@ private:
                     }
                     j %= 9;
                 }
+                if (i >= 9) return true;
                 if (tryNum(board, i, j)) return true;
                 row[curI].erase(board[curI][curJ]);
                 col[curJ].erase(board[curI][curJ]);
