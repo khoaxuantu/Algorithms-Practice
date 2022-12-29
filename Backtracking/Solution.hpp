@@ -334,4 +334,58 @@ public:
     }
 };
 
+
+/**
+ * @brief Matchsticks to Square
+ * 
+ * @param matchsticks An integer array where matchsticks[i]
+ * is the length of the ith matchstick
+ * 
+ * @return :boolean: If we can make a square by connecting every
+ * single matchstick. No stick should be broken and each matchstick 
+ * can only be used once.
+ */
+class MatchstickToSquare
+{
+private:
+    vector<int> matchsticks;
+    int edge;
+    bool checkSquare(vector<int>& matchsticks, vector<int>& sideLengths, 
+                     int index) {
+        //* Base case: index at 0
+        if (index < 0)
+            return sideLengths[0] == sideLengths[1] && sideLengths[1] == sideLengths[2] &&
+                   sideLengths[2] == sideLengths[3];
+        //* Call to recursive func
+            // If a num = total / 4, call to next edge
+            // If a num < total / 4, add to cur edge
+            // If a num > total / 4 => false
+        for (int i = 0; i < 4; i++) {
+            if (sideLengths[i] + matchsticks[index] > edge) continue;
+            sideLengths[i] += matchsticks[index];
+            if (checkSquare(matchsticks, sideLengths, index - 1)) return true;
+            sideLengths[i] -= matchsticks[index];
+        }
+        return false;
+    }
+public:
+    MatchstickToSquare(vector<int>& input) : matchsticks(input) {}
+    bool solve() {
+        //* Cal the total length => total length is not divisible by 4, return false
+        //* total length < 4 or matchsticks < 4, return false
+        if (matchsticks.size() < 4) return false;
+        int totalLength = 0;
+        for (int& matchstick : matchsticks) {
+            totalLength += matchstick;
+        }
+        if (totalLength % 4 != 0) return false;
+        edge = totalLength / 4;
+        //* Sort matchsticks
+        //* Solve recursively
+        sort(matchsticks.begin(), matchsticks.end());
+        vector<int> sideLengths (4, 0);
+        return checkSquare(matchsticks, sideLengths, matchsticks.size() - 1);
+    }
+};
+
 #endif // SOLUTION_HPP

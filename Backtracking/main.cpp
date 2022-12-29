@@ -63,6 +63,13 @@ vector<vector<char>> SSBoard {
     {'.','.','.','4','1','9','.','.','5'},
     {'.','.','.','.','8','.','.','7','9'}
 };
+//* Matchsticks to Square
+vector<vector<int>> MTSMatchsticks {
+    {3,3,3,3,4},
+    {1,1,2,2,2},
+    {1,1,1,2,1},
+    {3, 4, 4, 1, 2, 2}
+};
 
 
 /**
@@ -80,17 +87,15 @@ int main(int argc, char const *argv[])
     start = clock();
 
     /* Compiler switch */
-    int _switch = 1;    
+    int _switch = 0;    
 
     /**
      * TODO: Modify input here 
      * TODO: Print the output
      */
-    SudokuSolver SS(SSBoard);
-    vector<vector<char>> result = SS.solve();
-    for (auto row : result) {
-        for (char& c : row) cout << c << " ";
-        cout << endl;
+    for (auto matchsticks : MTSMatchsticks) {
+        MatchstickToSquare MTS(matchsticks);
+        cout << boolalpha << MTS.solve() << endl;
     }
     
     /* End timing */
