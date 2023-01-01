@@ -414,8 +414,183 @@ public:
 
 
 /**
- * @brief 
+ * @brief Dutch National Flag Problem
+ * TODO: Rewrite the solution
  * 
+ * @param arr An array containing 0s, 1s and 2s
+ * 
+ * @return :void: Sort the array in place. You should treat numbers of the
+ * array as objects, hence, we can't count 0s, 1s, and 2s to recreate the 
+ * array
  */
+class DutchFlag 
+{
+public:
+    void solve(vector<int> & arr) {
+        // TODO: Write your code here
+
+    }
+};
+
+
+/**
+ * @brief Quadruple Sum to Target
+ * 
+ * @param arr An array of unsorted number 
+ * @param target A target number
+ * 
+ * @return :vector<vector<int>>: All quadruplets in it, whose sum is equal
+ * to the target number
+ */
+class QuadrupleSumToTarget
+{
+private:
+    vector<int> arr;
+    int target;
+    int pair_sum(pair<int, int>& p, vector<int>& arr)
+    {
+        return arr[p.first] + arr[p.second];
+    }
+    void pushToAns(pair<int, int>& left, pair<int, int>& right, 
+                   vector<vector<int>>& ans, vector<int>& arr)
+    {
+        ans.push_back({arr[left.first], arr[left.second], arr[right.first], arr[right.second]});
+    }
+public:
+    QuadrupleSumToTarget(vector<int>& arr, int target) : arr(arr), target(target) {}
+    vector<vector<int>> solve() {
+        vector<vector<int>> ans;
+        int endpoint = arr.size() - 1;
+        // Sort the array
+        sort(arr.begin(), arr.end());
+        // Consider every elements of the array, for each element
+            // Initialize 2 pointers of pair left and right. left.second = element; right = (arr - 1. arr)
+            // sum(left) + sum(right) = target ?
+            // left.second < right.first
+                // If left.first = left.second or right.first = right,second, shift the pair toward the middle by 1
+                // if curSum > target, decrement right.first
+                    // If found a quadruplet, push to ans, then decrement right.second
+                // if curSum < target, increment left.second
+                    // If found a quadruplet, push to ans, then increment left.first
+            pair<int, int> left (make_pair(0, 1));
+            pair<int, int> right (make_pair(endpoint - 1, endpoint));
+
+            while (left.second < right.first)
+            {
+                if (left.first == left.second)
+                {
+                    left.second++;                
+                }
+                if (right.first == right.second)
+                {
+                    right.first--;
+                }
+
+                int curSum = pair_sum(left, arr) + pair_sum(right, arr);
+                if (curSum > target)
+                {
+                    right.first--;
+
+                    if (pair_sum(left, arr) + pair_sum(right, arr) == target)
+                    {
+                        // cout << "call\n";
+                        pushToAns(left, right, ans, arr);
+                        right.second--;
+                    }
+                }
+                else
+                {
+                    left.second++;
+                    if (pair_sum(left, arr) + pair_sum(right, arr) == target)
+                    {
+                        pushToAns(left, right, ans, arr);
+                        left.first++;
+                    }
+                }
+            }
+        return ans;
+    }
+};
+
+
+/**
+ * @brief Compare Strings containing Backspaces
+ * TODO: Rewrite the solution
+ * 
+ * @param str1 The first input string
+ * @param str2 The second input string
+ * 
+ * @return :boolean: If the two strings are equal
+ */
+class BackspaceCompare
+{
+private:
+    string str1;
+    string str2;
+public:
+    BackspaceCompare(string& str1, string& str2) : str1(str1), str2(str2) {}
+    bool solve() {
+        // TODO: Write your code here
+        return false;
+    }
+};
+
+
+/**
+ * @brief Minimum Window Sort 
+ * 
+ * @param arr An array of unsorted numbers
+ * 
+ * @return :int: The length of the smallest subarray in it which when sorted
+ * will sort the whole array
+ */
+class ShortestWindowSort
+{
+private:
+    vector<int> arr;
+public:
+    ShortestWindowSort(vector<int>& arr) : arr(arr) {}
+    int solve() {
+        // TODO: Write your code here
+        // Find unsorted min and unsorted max
+        int left = 1, right = arr.size() - 2;
+        // arr.push_back(INT_MIN);
+        // arr.push_back(INT_MAX);
+        int unsorted_min = INT_MAX, unsorted_max = INT_MIN;
+        while (left < arr.size() && right >= 0)
+        {
+            if (arr[left] < arr[left-1])
+            {
+                unsorted_min = min(unsorted_min, arr[left]);
+            }
+
+            if (arr[right] > arr[right+1])
+            {
+                unsorted_max = max(unsorted_max, arr[right]);
+            }
+            left++;
+            right--;
+        }
+        // cout << unsorted_min << " " << unsorted_max << endl;
+        if (unsorted_min == INT_MAX || unsorted_max == INT_MIN)
+        {
+            return 0;
+        }
+        // Find indices which is less than the unsorted min 
+        // and larger than the unsorted max
+        left = 0;
+        right = arr.size()-1;
+        while (arr[left] < unsorted_min)
+        {
+            left++;
+        }
+        while (arr[right] > unsorted_max)
+        {
+            right--;
+        }
+        // cout << left << " " << right << " | ";
+        return right - left + 1;
+    }
+};
 
 #endif // SOLUTION_HPP
