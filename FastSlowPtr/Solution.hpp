@@ -36,4 +36,25 @@ public:
     }
 };
 
+
+/**
+ * @brief Start of LinkedList Cycle
+ * TODO: Rewrite the solution
+ * 
+ * @param head The head of a Linked List that contains cycle
+ * 
+ * @return :ListNode: the starting node of the cycle
+ */
+class LinkedListCycleStart
+{
+private:
+    ListNode* head;
+public:
+    LinkedListCycleStart(ListNode* root) : head(root) {}
+    ListNode* solve() {
+        // TODO: Write your code here
+        return head;
+    }
+};
+
 #endif // SOLUTION_HPP
