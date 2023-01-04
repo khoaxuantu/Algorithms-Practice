@@ -11,6 +11,15 @@ vector<string> BCStr {
     "40 - 25 - 5",
     "(27 + (7 + 5) - 3) + (6 + 10)"
 };
+//* Remove All Adjacent Duplicates in String
+vector<string> RAADSStr {
+    "g",
+    "aaa",
+    "abbaaca",
+    "sadkkdassa",
+    "xyyxxzx",
+    "sadyydassa"
+};
 
 int main(int argc, char const *argv[])
 {
@@ -27,9 +36,9 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (auto s : BCStr) {
-        BasicCalculator bc(s);
-        cout << bc.solve() << endl;
+    for (auto s : RAADSStr) {
+        RemoveDuplicates RD(s);
+        cout << RD.solve() << endl;
     }
     
     /* End timing */

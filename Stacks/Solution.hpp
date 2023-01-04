@@ -76,4 +76,42 @@ public:
     }
 };
 
+
+/**
+ * @brief Remove All Adjacent Duplicates in String
+ * 
+ * @param toCleanUp A string consisting of lowercase English letters
+ * 
+ * @return :string: The string after removing adjacent duplicate letters
+ */
+class RemoveDuplicates
+{
+private:
+    string toCleanUp;
+public:
+    RemoveDuplicates(string& input) : toCleanUp(input) {}
+    string solve() {
+        if (toCleanUp.size() == 1) return toCleanUp;
+        string ans;
+        //* Use a stack
+        //* When I traverse the string, check if the char is similar to
+        //* stack's top char
+            // If yes, pop out of stack
+            // Otherwise, push the char to the stack
+        stack<char> st;
+        st.push(toCleanUp[0]);
+        for (int i = 1; i < toCleanUp.size(); i++) {
+            if (!st.empty() && toCleanUp[i] == st.top()) st.pop();
+            else st.push(toCleanUp[i]);
+        }
+        while (!st.empty())
+        {
+            ans += st.top();
+            st.pop();
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
 #endif // SOLUTION_HPP
