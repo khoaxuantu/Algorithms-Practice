@@ -114,4 +114,46 @@ public:
     }
 };
 
+
+/**
+ * @brief Minimum Remove to Make Valid Parentheses
+ * 
+ * @param s A string with matched and unmatched parentheses
+ * 
+ * @return :string: The result string with valid parenthesization after
+ * minimum numbers of parentheses removed
+ */
+class MinRemoveParentheses
+{
+private:
+    string s;
+public:
+    MinRemoveParentheses(string& input) : s(input) {}
+    string solve() {
+        //* Use stacks to store parentheses with corresponding index
+        //* If stack top is '(' and cur char is ')', pop 
+        //* Create a new string with excluded parentheses
+        unordered_set<int> invalidChar;
+        stack<pair<char,int>> st;
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == '(') st.push(make_pair('(', i));
+            else if (s[i] ==')') {
+                if (!st.empty()) st.pop();
+                else invalidChar.insert(i);
+            }
+        }
+        while (!st.empty()) {
+            invalidChar.insert(st.top().second);
+            st.pop();
+        }
+        string ans;
+        for (int i = 0; i < s.size(); i++) {
+            if (invalidChar.find(i) == invalidChar.end()) {
+                ans += s[i];
+            }
+        }
+        return ans;
+    }
+};
+
 #endif // SOLUTION_HPP

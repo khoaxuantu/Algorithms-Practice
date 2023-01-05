@@ -20,6 +20,12 @@ vector<string> RAADSStr {
     "xyyxxzx",
     "sadyydassa"
 };
+//* Minimum Remove to Make Valid Parentheses
+vector<string> MRMVPStr {
+    "m)no(q)rs(",
+    ")((yz)())(",
+    "ab)cca(spo)(sc(s)("
+};
 
 int main(int argc, char const *argv[])
 {
@@ -36,9 +42,9 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (auto s : RAADSStr) {
-        RemoveDuplicates RD(s);
-        cout << RD.solve() << endl;
+    for (auto s : MRMVPStr) {
+        MinRemoveParentheses MRP(s);
+        cout << MRP.solve() << endl;
     }
     
     /* End timing */
