@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#include "Header/ListNode.hpp"
+#include "../Header/ListNode.hpp"
 #include "Solution.hpp"
 
 //* LinkedList Cycle
@@ -12,6 +12,18 @@ using namespace std;
         // ListNode* tail = newList.getTail(root);
         // tail->next = root or node;
 vector<int> LCArr {1,2,3,4,5,6};
+//* Start of Linked List Cycle
+vector<int> SLLCArr {1,2,3,4,5,6};
+//* Happy Number
+vector<int> HNArr {23,12};
+//* Start of LinkedList Cycle
+vector<int> SLCArr {1,2,3,4,5,6};
+//* Palindrome LinkedList
+vector<vector<int>> PLArr {
+    {2,4,6,4,2},
+    {2,4,6,4,2,2},
+    {2,4,5,5,4,2}
+};
 
 int main(int argc, char * argv[])
 {
