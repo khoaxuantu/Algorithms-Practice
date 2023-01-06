@@ -26,6 +26,15 @@ vector<string> MRMVPStr {
     ")((yz)())(",
     "ab)cca(spo)(sc(s)("
 };
+//* Exclusive Execution Time of Functions
+vector<vector<string>> EETFStr {
+    {"0:start:0","1:start:5", "1:end:9","4:start:10","2:start:13", "2:end:15", "3:start:16", "3:end:18", "4:end:21", "0:end:22"},
+    {"0:start:0","1:start:2","1:end:3","2:start:4","2:end:7","0:end:8"},
+    {"0:start:0","0:start:2","0:end:5","1:start:5","1:end:6","0:end:7"},
+    {"0:start:0","1:start:6","1:end:6","0:end:7"},  
+    {"0:start:0","1:start:3","1:end:6","0:end:10"}
+};
+vector<int> EETFN {5,3,2,2,2};
 
 int main(int argc, char const *argv[])
 {
@@ -36,15 +45,18 @@ int main(int argc, char const *argv[])
     start = clock();
     
     /* Compiler switch */
-    int _switch = 1;
+    int _switch = 0;
     
     /**
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (auto s : MRMVPStr) {
-        MinRemoveParentheses MRP(s);
-        cout << MRP.solve() << endl;
+    for (int i = 0; i < EETFN.size(); i++) {
+        ExclusiveTime ET(EETFN[i], EETFStr[i]);
+        for (auto n : ET.solve()) {
+            cout << n << " ";
+        }
+        cout << endl;
     }
     
     /* End timing */

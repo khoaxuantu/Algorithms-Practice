@@ -156,4 +156,83 @@ public:
     }
 };
 
+
+/**
+ * @brief Exclusive Execution Time of Functions
+ * 
+ * @param n the number of functions running in a single-thread CPU
+ * @param logs A list of strings representing an execution log. Each string has
+ * format {function_id}:{"start"|"end"}:{timestamp}
+ * 
+ * @return :vector<int>: The exclusive times of the functions in the program 
+ */
+/* Support Templates */
+void Split(string &s, string &delim, vector<string> &elems)
+{
+    regex rgx(delim);
+    sregex_token_iterator iter(s.begin(), s.end(), rgx, -1);
+    sregex_token_iterator end;
+    while (iter != end)
+    {
+        elems.push_back(*iter);
+        ++iter;
+    }
+}
+
+class Log
+{
+public:
+    int id;
+    bool isStart;
+    int time;
+    Log(string content)
+    {
+        vector<string> strs;
+        string delim = ":";
+        Split(content, delim, strs);
+        id = stoi(strs[0]);
+        isStart = strs[1] == "start";
+        time = stoi(strs[2]);
+    }
+}; // End of support templates
+
+class ExclusiveTime
+{
+private:
+    int n;
+    vector<string> logs;
+public:
+    ExclusiveTime(int inputN, vector<string>& inputS) : 
+        n(inputN), logs(inputS) {}
+    vector<int> solve() { //   5 3 3 6
+        // TODO: Write your code here
+        vector<int> ans (n);
+        //* Traverse the logs
+        //* Use a stack to keep track the functions
+            // If meet a start log, check if there is a running log and push to stack
+            // If meet an end log, update the time taken and pop the corresponding start log
+        stack<Log> st; // 0:5
+        for (int i = 0; i < logs.size(); i++) {
+            Log log(logs[i]);
+            if (log.isStart) {
+                st.push(log);
+            }
+            else {
+                int execute = log.time - st.top().time + 1;
+                ans[log.id] += execute;
+                st.pop();
+                if (!st.empty()) ans[st.top().id] -= execute;
+            }
+        }
+        return ans;
+    }
+};
+
+
+/**
+ * @brief Flatten Nested List Iterator
+ * 
+ * @param 
+ */
+
 #endif // SOLUTION_HPP
