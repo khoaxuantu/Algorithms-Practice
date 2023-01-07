@@ -35,6 +35,10 @@ vector<vector<string>> EETFStr {
     {"0:start:0","1:start:3","1:end:6","0:end:10"}
 };
 vector<int> EETFN {5,3,2,2,2};
+//* Valid Parentheses
+vector<string> VPStr {
+    "(){[{()}]}","))){{}}}]]",")))))","()","(){}[]", "{}[]{}[{}])"
+};
 
 int main(int argc, char const *argv[])
 {
@@ -51,12 +55,9 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (int i = 0; i < EETFN.size(); i++) {
-        ExclusiveTime ET(EETFN[i], EETFStr[i]);
-        for (auto n : ET.solve()) {
-            cout << n << " ";
-        }
-        cout << endl;
+    for (auto s : VPStr) {
+        ValidParentheses VP(s);
+        cout << boolalpha << VP.solve() << endl;
     }
     
     /* End timing */

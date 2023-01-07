@@ -230,9 +230,48 @@ public:
 
 
 /**
- * @brief Flatten Nested List Iterator
+ * @brief Valid Parentheses
  * 
- * @param 
+ * @param s A string that may consist of opening or closing parentheses
+ * 
+ * @return :boolean: If the string contains valid parenthesization or not 
  */
+class ValidParentheses
+{
+private:
+    string s;
+public:
+    ValidParentheses(string& s) : s(s) {}
+    bool solve() {
+        //* Using a stack
+        //* If the char is '(', '[', or '{', push to the stack
+        //* Otherwise, 
+            // if is ')'
+            // if is ']'
+            // if is '}'
+        stack<char> st;
+        for (char& c : s) {
+            if (c == '(' || c == '[' || c == '{') {
+                st.push(c);
+            }
+            else {
+                if (st.empty()) return false;
+                if (c == ')') {
+                    if (st.top() != '(') return false;
+                    else st.pop();
+                }
+                else if (c == ']') {
+                    if (st.top() != '[') return false;
+                    else st.pop();
+                }
+                else {
+                    if (st.top() != '{') return false;
+                    else st.pop();
+                }
+            }
+        }
+        return st.empty();
+    }
+};
 
 #endif // SOLUTION_HPP
