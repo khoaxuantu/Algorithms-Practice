@@ -26,7 +26,6 @@ public:
             }
             runner = runner->children[word[i]];
             runner->searchWords.push_back(word);
-            sort(runner->searchWords.begin(), runner->searchWords.end());
             if (runner->searchWords.size() > 3) runner->searchWords.pop_back();
         }
     }
@@ -54,6 +53,7 @@ public:
         products(inputPro), searchWord(inputWord) {}
     vector<vector<string>> solve() {
         vector<vector<string>> ans;
+        sort(products.begin(), products.end());
         SearchSuggestedTrie ST;
         for (string& s : products) {
             ST.Insert(s);

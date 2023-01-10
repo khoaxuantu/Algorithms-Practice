@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
     start = clock();
     
     /* Compiler switch */
-    int _switch = 0;
+    int _switch = 1;
     
     /**
      * TODO: Modify input here
