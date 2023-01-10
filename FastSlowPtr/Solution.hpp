@@ -187,4 +187,132 @@ public:
     }
 };
 
+
+/**
+ * @brief Rearrange a LinkedList
+ * 
+ * @param head The head of a Singly Linked List
+ * 
+ * @return :ListNode: the list after modified such that the nodes
+ * from the second half of the LinkedList are inserted alternately 
+ * to the nodes from the first half in reverse order
+ */
+class RearrangeList
+{
+private:
+    ListNode* head;
+    ListNode* reverse(ListNode* root)
+    {
+        ListNode* tail = root;
+        while (tail->next != nullptr)
+        {
+            ListNode* nextNode = tail->next;
+            tail->next = nextNode->next;
+            nextNode->next = root;
+            root = nextNode;
+        }
+        return root;
+    }
+public:
+    RearrangeList(ListNode* root) : head(root) {}
+    ListNode* solve() {
+        // TODO: Write your code here    
+        // Should not use any extra place
+        if (head == nullptr || head->next == nullptr) return;
+        // Find the middle node
+        ListNode *mid = head, *beforemid;
+        ListNode *fast = head;
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            beforemid = mid;
+            fast = fast->next->next;
+            mid = mid->next;
+        }
+        
+        // From the middle node, reverse the nodes
+        beforemid->next = reverse(mid);
+        mid = beforemid->next;
+        // From the middle node after reverse, insert to the first half nodes
+        ListNode *firstHalf = head;
+        while (mid->next != nullptr)
+        {
+            ListNode *curNode = mid;
+            mid = mid->next;
+            beforemid->next = mid;
+
+            ListNode *nextFirstHalf = firstHalf->next; //8
+            curNode->next = nextFirstHalf; //8
+            firstHalf->next = curNode;
+            firstHalf = nextFirstHalf;
+        }
+        return head;
+    }
+};
+
+
+/**
+ * @brief Circle in a Circular Array
+ * 
+ * @param arr An array containing positive and negative number
+ * 
+ * @return :boolean: If the array has a cycle
+ */
+class CircularArrayLoop
+{
+private:
+    vector<int> arr;
+    int moveIndex(int index, const vector<int>& arr, bool& makeCycle)
+    {
+        int M = arr[index];
+        if (M > 0)
+        {
+            for (int i = 0; i < M; i++)
+            {
+                index++;
+                if (index > arr.size()-1)
+                {
+                    index = 0;
+                    makeCycle = true;
+                }
+            }
+        }
+        else if (M < 0)
+        {
+            for (int i = M; i < 0; i++)
+            {
+                index--;
+                if (index < 0)
+                {
+                    index = arr.size() - 1;
+                    makeCycle = true;
+                }
+            }
+        }
+        return index;
+    }
+public:
+    CircularArrayLoop(vector<int>& inputArr) : arr(inputArr) {}
+    bool solve() {
+        // TODO: Write your code here
+        // initialize 2 ptr, one moves 1 step, one moves 2 steps each iter
+        int ptrSlow = 0, ptrFast = 0;
+        // Run the 2 ptrs until one of them (ptrFast) exceed the scope of the arr
+            // If ptrSlow = ptrFast return true
+        bool makeCycle = false;
+        do
+        {
+            ptrSlow = moveIndex(ptrSlow, arr, makeCycle);
+            ptrFast = moveIndex(moveIndex(ptrFast, arr, makeCycle), arr, makeCycle);
+            // cout << ptrSlow << "," << ptrFast << " ";
+            if (ptrSlow == ptrFast)
+            {
+                if (makeCycle == true) return true;
+                else break;
+            }
+
+        } while (ptrFast >= 0 || ptrFast < arr.size());
+        return false;
+    }
+};
+
 #endif // SOLUTION_HPP

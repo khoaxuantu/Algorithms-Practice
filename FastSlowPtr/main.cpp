@@ -18,11 +18,17 @@ vector<int> SLLCArr {1,2,3,4,5,6};
 vector<int> HNArr {23,12};
 //* Start of LinkedList Cycle
 vector<int> SLCArr {1,2,3,4,5,6};
-//* Palindrome LinkedList
+//* Palindrome LinkedList & Rearrange a LinkedList
 vector<vector<int>> PLArr {
     {2,4,6,4,2},
     {2,4,6,4,2,2},
     {2,4,5,5,4,2}
+};
+//* Circle in a Circular Array
+vector<vector<int>> CCAArr {
+    {1, 2, -1, 2, 2},
+    {2, 2, -1, 2},
+    {2,1,-1,-2}
 };
 
 int main(int argc, char * argv[])
