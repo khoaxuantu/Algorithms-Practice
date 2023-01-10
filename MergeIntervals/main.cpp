@@ -2,86 +2,51 @@
 
 using namespace std;
 
+#include "../Header/Interval.hpp"
+#include "Solution.hpp"
 
-class Interval {
- public:
-  int start = 0;
-  int end = 0;
-
-  Interval (int start, int end) {
-    this->start = start;
-    this->end = end;
-  }
+//* Merge Intervals
+vector<vector<Interval>> MIIntervals {
+  {{1, 3}, {2, 5}, {7, 9}},
+  {{6, 7}, {2, 4}, {5, 9}},
+  {{1, 4}, {2, 6}, {3, 5}}
 };
-
-class MergeIntervals {
- private:
-  
-
- public:
-  static vector<Interval> merge(vector<vector<Interval>> &schedule) {
-    vector<Interval> ans;
-    // Initialize a minHeap of the endtime
-    auto custCompare = [&] (const Interval& x, const Interval& y) { return x.end > y.end; };
-    priority_queue<Interval, vector<Interval>, decltype(custCompare)> minHeap (custCompare);
-    // Push the schedule of every employee into the heap
-    for (auto employee : schedule)
-    {
-      for (auto time : employee)
-      {
-        minHeap.push(time);
-      }
-    }
-    // Traverse the heap until it is empty
-      // In each iter, pop out the top as the cur
-      // cur.end < heap.top.start
-        // Push into the ans
-    while (!minHeap.empty())
-    {
-      Interval curTime = minHeap.top();
-      minHeap.pop();
-
-      if (curTime.end < minHeap.top().start)
-      {
-        ans.push_back({curTime.end, minHeap.top().start});
-      }
-    }
-    
-    return ans;
-  }
+//* Employee Free Time
+vector<vector<vector<Interval>>> EFTIntervals = {
+  {{{1,3}, {5,6}}, {{2,3}, {6,8}}},
+  {{{1,3}, {9,12}}, {{2,4}, {6,8}}},
+  {{{1,3}, {2,4}}, {{3,5}, {7,9}}}
 };
 
 int main(int argc, char *argv[]) {
-  /* Start and end timing */
+    /* Start and end timing */
     clock_t start, end;
-    
+
     /* Start timing */
     start = clock();
-    
-  /* Example */
-  vector<vector<vector<Interval>>> input = {
-    {{{1,3}, {5,6}}, {{2,3}, {6,8}}},
-    {{{1,3}, {9,12}}, {{2,4}, {6,8}}},
-    {{{1,3}, {2,4}}, {{3,5}, {7,9}}}
-  };
-  cout << "Merged intervals:\n";
-  for (auto arr : input)
-  {
-    for (auto interval : MergeIntervals::merge(arr))
-    {
-      cout << "[" << interval.start << "," << interval.end << "] ";
-    }
-    cout << endl;
-    // cout << MergeIntervals::merge(arr) << endl;
-  }
 
-  /* End timing */
+    /* Compiler switch */
+    int _switch = 0;
+
+    /**
+     * TODO: Modify input here
+     * TODO: Print the output
+     */
+    for (auto intervals : MIIntervals) {
+        MergeIntervals MI(intervals);
+        for (auto i : MI.solve()) {
+            cout << i.start <<"-"<<i.end <<" ";
+        }
+        cout << endl;
+    }
+
+    /* End timing */
     end = clock();
 
     /* Print out time */
     double time_taken = (double(end - start) / double(CLOCKS_PER_SEC)) * 1000;
     cout << "Time taken by program is : " << fixed 
-         << time_taken << setprecision(5);
+          << time_taken << setprecision(5);
     cout << " ms " << endl;
     cout << endl;
 }
