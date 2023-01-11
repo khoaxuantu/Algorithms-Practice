@@ -122,4 +122,52 @@ public:
     }
 };
 
+
+/**
+ * @brief Design Add and Search Words Data Structure
+ * 
+ * 
+ */
+class WordDictionary // n: words    c: chars of each words
+{
+private:
+    TrieDefault trie;
+    vector<string> dict;
+    bool dfs(TrieNode* node, string& word, int index) {
+        //* Base case
+        if (index >= word.size()) return node->isWord;
+        //* Call to recursive func
+        if (word[index] != '.') {
+            if (node->children.count(word[index]) == 0) return false; 
+            return dfs(node->children[word[index]], word, index+1);
+        }
+        else {
+            for (auto entry : node->children) {
+                if (dfs(node->children[entry.first], word, index+1)) return true;
+            }
+        }
+        return false;
+    }
+public:
+    WordDictionary(){
+        // Initialize your variables here
+    }
+
+    vector<string> GetWords(){ // O(1) || O(nlogn) if sort needed
+        // write your code here
+        return dict;  
+    }
+
+    void AddWord(string& word){ // O(m)
+        // wrote your code here
+        trie.Insert(word);
+        dict.push_back(word);
+    }
+
+    bool SearchWord(string& word){ // O(26^m)
+        // write your code here
+        return dfs(trie.getRoot(), word, 0);
+    }
+};
+
 #endif // SOLUTION_HPP
