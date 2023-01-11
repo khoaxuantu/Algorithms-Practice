@@ -13,6 +13,17 @@ vector<vector<string>> SSSStr {
 vector<string> SSSWord {
     "game", "bags"
 };
+//* Replace Words
+vector<string> RWStr {
+    "the quick brown fox jumps over the lazy dog",
+    "lets learn something new today",
+    "for every action there is an equal but opposite reaction"
+};
+vector<vector<string>> RWDict {
+    {"qui", "brow", "bro", "jum", "j", "la", "d", "do"},
+    {"le", "some", "yes", "let"},
+    {"ev", "eq", "th", "act", "e", "opp", "xy", "is"}
+};
 
 int main(int argc, char const *argv[])
 {
@@ -29,14 +40,9 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (int i = 0; i < SSSStr.size(); i++) {
-        SearchSuggestedSys SSS(SSSStr[i], SSSWord[i]);
-        for (auto v : SSS.solve()) {
-            cout << "[ ";
-            for (auto s : v) cout << s << " ";
-            cout << "] ";
-        }
-        cout << endl;
+    for (int i = 0; i < RWStr.size(); i++) {
+        ReplaceWords rw(RWStr[i], RWDict[i]);
+        cout << rw.solve() << endl;
     }
     
     /* End timing */

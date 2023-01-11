@@ -64,6 +64,10 @@ public:
         }
         runner->isWord = true;
     }
+
+    TrieNode* getRoot() {
+        return root;
+    }
 };
 
 #endif // TRIE_HPP
