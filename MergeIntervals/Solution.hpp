@@ -37,6 +37,54 @@ public:
 
 
 /**
+ * @brief Insert Interval
+ * 
+ * @param intervals A list of non-overlapping intervals
+ * @param newInterval A new interval to be inserted
+ * 
+ * @return :vector<Interval>: The new list after inserting
+ */
+class InsertInterval
+{
+private:
+    vector<Interval> intervals;
+    Interval newInterval;
+    bool isOverlap(Interval& x, Interval& y) {
+        return (x.start < y.start && x.end > y.start) ||
+               (y.start < x.start && y.end > x.start);
+    }
+public:
+    InsertInterval(vector<Interval>& intervals, Interval& newInterval) :
+        intervals(intervals), newInterval(newInterval) {}
+    vector<Interval> solve() {
+        vector<Interval> ans;
+        int i = 0;
+        while (i < intervals.size()) {
+            if (isOverlap(intervals[i], newInterval)) {
+                newInterval.start = min(newInterval.start, intervals[i].start);
+                newInterval.end = max(newInterval.end, intervals[i].end);
+            }
+            else if (intervals[i].end <= newInterval.start) {
+                ans.push_back(intervals[i]);
+            }
+            else if (intervals[i].start >= newInterval.end) {
+                ans.push_back(newInterval);
+                newInterval = {-1,-1};
+                break;
+            }
+            i++;
+        }
+        if (newInterval.start != -1 && newInterval.end != -1) ans.push_back(newInterval);
+        while (i < intervals.size()) {
+            ans.push_back(intervals[i]);
+            i++;
+        }
+        return ans;
+    }
+};
+
+
+/**
  * @brief Interval Intersection
  * 
  * @param arr1 The 1st interval list (disjoint intervals sorted on their start time)

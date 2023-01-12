@@ -11,6 +11,15 @@ vector<vector<Interval>> MIIntervals {
   {{6, 7}, {2, 4}, {5, 9}},
   {{1, 4}, {2, 6}, {3, 5}}
 };
+//* Insert Interval
+vector<vector<Interval>> IIntervals {
+  {{1,3},{5,7},{8,12}},
+  {{1,3},{5,7},{8,12}},
+  {{2,3},{5,7}}
+};
+vector<Interval> IINewIntervals {
+  {4,6},{4,10},{1,4}
+};
 //* Interval Intersection
 vector<vector<Interval>> IIArr1 {
   {{1, 3}, {5, 6}, {7, 9}},
@@ -35,18 +44,16 @@ int main(int argc, char *argv[]) {
     start = clock();
 
     /* Compiler switch */
-    int _switch = 0;
+    int _switch = 1;
 
     /**
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (int i = 0; i < IIArr1.size(); i++) {
-        IntervalsIntersection ii(IIArr1[i], IIArr2[i]);
+    for (int i = 0; i < IINewIntervals.size(); i++) {
+        InsertInterval ii(IIntervals[i], IINewIntervals[i]);
         for (auto interval : ii.solve()) {
-          cout << "[ ";
-          cout << interval.start << " " << interval.end << " ";
-          cout << "] ";
+          cout << interval.start <<"-"<< interval.end << " ";
         }
         cout << endl;
     }
