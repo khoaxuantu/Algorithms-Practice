@@ -8,6 +8,8 @@ public:
     bool isWord;
     //* For the search suggestions system
     std::vector<std::string> searchWords;
+    //* For lexicographical numeric order
+    std::map<char, TrieNode*> lexiNumChildren;
 
     TrieNode() {
         this->isWord = false;

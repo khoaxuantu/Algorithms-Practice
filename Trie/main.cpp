@@ -24,6 +24,21 @@ vector<vector<string>> RWDict {
     {"le", "some", "yes", "let"},
     {"ev", "eq", "th", "act", "e", "opp", "xy", "is"}
 };
+//* Replace Words II
+vector<vector<vector<char>>> WSIIChar {
+    {
+        {'C','O','L','I','M'},
+        {'I','N','L','M','O'},
+        {'A','L','I','E','O'},
+        {'R','T','A','S','N'},
+        {'S','I','T','A','C'}
+    }
+};
+vector<vector<string>> WSIIStr {
+    {"REINDEER", "IN", "RAIN"}
+};
+//* Lexicographical Order
+vector<int> LOArr {12, 11, 5};
 
 int main(int argc, char const *argv[])
 {
@@ -34,15 +49,17 @@ int main(int argc, char const *argv[])
     start = clock();
     
     /* Compiler switch */
-    int _switch = 1;
+    int _switch = 0;
     
     /**
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (int i = 0; i < RWStr.size(); i++) {
-        ReplaceWords rw(RWStr[i], RWDict[i]);
-        cout << rw.solve() << endl;
+    for (int i = 0; i < LOArr.size(); i++) {
+        LexicographicalOrder lo(LOArr[i]);
+        for (auto c : lo.solve()) {
+            cout << c << " ";
+        } cout << endl;
     }
     
     /* End timing */

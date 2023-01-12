@@ -170,4 +170,127 @@ public:
     }
 };
 
+
+/**
+ * @brief Word Search II
+ * 
+ * @param words A list of strings that needed to be found
+ * @param grid A 2-d grid where we can find the strings
+ * 
+ * @return :vector<string>: The list of strings that were found in the grid
+ */
+class WordSearchII
+{
+private:
+    vector<vector<char>> grid;
+    vector<string> words;
+    vector<int> offset {0, -1, 0, 1, 0};
+    void search(int i, int j, TrieNode* node, vector<string>& ans, string& s) {
+        //* Base case
+        if (i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size()) return;
+        // grid[i][j] = '.';
+        //* Call to recursive func
+        for (int k = 0; k < 4; k++) {
+            int r = i + offset[k];
+            int c = j + offset[k+1];
+            if (r >= 0 && r < grid.size() && c >= 0 && c < grid[0].size() &&
+                node->children.find(grid[r][c]) !=  node->children.end()) {
+                s += grid[r][c];
+                search(r, c, node->children[grid[r][c]], ans, s);
+                s = s.substr(0, s.size() - 1);
+            }
+        }
+        if (node->isWord) {
+            if (find(ans.begin(), ans.end(), s) == ans.end()) {
+                ans.push_back(s);
+            }
+            return;
+        }
+    }
+public:
+    WordSearchII(vector<vector<char>>& grid, vector<string>& words) :
+        grid(grid), words(words) {}
+    vector<string> solve() {
+        vector<string> ans;
+        //* Insert the words into a trie
+        TrieDefault trie;
+        for (auto& s : words) {
+            trie.Insert(s);
+        }
+        TrieNode* runner = trie.getRoot();
+        //* Search through the grid, if a char is in the root.children, call to search word
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid[0].size(); j++) {
+                if (runner->children.find(grid[i][j]) != runner->children.end()) {
+                    string tmp;
+                    tmp += grid[i][j];
+                    search(i, j, runner->children[grid[i][j]], ans, tmp);
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+
+/**
+ * @brief Lexicographical Order
+ * 
+ * @param n An integer value 
+ * 
+ * @return :vector<int>: A list of all numbers in the range 1 to n 
+ * in lexicographical order
+ */
+class LexiTrie : public ITrie
+{
+public:
+    LexiTrie() {
+        root = new TrieNode();
+    }
+    void Insert(string& word) {
+        // write your code here
+        TrieNode* runner = root;
+        for (int i = 0; i < word.size(); i++) {
+            if (runner->lexiNumChildren.find(word[i]) == runner->lexiNumChildren.end()) {
+                runner->lexiNumChildren[word[i]] = new TrieNode();
+            }
+            runner = runner->lexiNumChildren[word[i]];
+        }
+        runner->isWord = true;
+    } 
+    TrieNode* getRoot() {
+        return root;
+    }
+};
+class LexicographicalOrder
+{
+private:
+    int n;
+    void addToList(vector<int>& ans, TrieNode* node, int num) {
+        //* Call to recursive func
+        int tmpNum;
+        for (auto entry : node->lexiNumChildren) {
+            tmpNum = num*10 + (entry.first - '0');
+            ans.push_back(tmpNum);
+            addToList(ans, node->lexiNumChildren[entry.first], tmpNum);
+        }
+    }
+public:
+    LexicographicalOrder(int n) : n(n) {}
+    vector<int> solve() {
+        vector<int> ans;
+        //* Insert 1 .. n to the trie
+        LexiTrie trie;
+        string num;
+        for (int i = 1; i <= n; i++) {
+            num = to_string(i);
+            trie.Insert(num);
+        }
+        TrieNode* root = trie.getRoot();
+        //* Traverse the trie and append to the list in every node
+        addToList(ans, root, 0);
+        return ans;
+    }
+};
+
 #endif // SOLUTION_HPP
