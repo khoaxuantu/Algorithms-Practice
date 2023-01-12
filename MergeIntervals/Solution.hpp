@@ -124,6 +124,95 @@ public:
 
 
 /**
+ * @brief Conflicting Appointment
+ * 
+ * @param intervals An array of intervals representing "N" appointments
+ * 
+ * @return :boolean: If a person can attend all the appoinments
+ */
+class ConflictingAppointments
+{
+private:
+    vector<Interval> intervals;
+public:
+    ConflictingAppointments(vector<Interval>& intervals) : intervals(intervals) {}
+    bool solve() {
+        sort(intervals.begin(), intervals.end(), 
+             [](Interval& x, Interval& y){ return x.start < y.start; });
+        for (int i = 0; i < intervals.size()-1; i++) {
+            if (intervals[i].end > intervals[i+1].start) return false;
+        }
+        return true;
+    }
+};
+
+
+/**
+ * @brief Minimum Meeting Rooms
+ * 
+ * @param meetings A list of intervals representing the start and the end
+ * of "N" meetings
+ * 
+ * @return :int: The minimum number of rooms required to hold all the meetings 
+ */
+class MinimumMeetingRooms
+{
+private:
+    vector<Interval> meetings;
+public:
+    MinimumMeetingRooms(vector<Interval> intervals) :
+        meetings(intervals) {}
+    int solve() {
+        // TODO: Write your code here
+        if (meetings.size() == 0) return 0;
+        int ans = 1;
+        // Sort the intervals first
+        sort(meetings.begin(), meetings.end(),
+            [] (const Interval& x, const Interval& y) { return x.start < y.start; });
+        // Start with the earlist meeting
+        // Check whether the following overlaps with the consideringMeeting i.e curMeeting
+        // When reach the non-ovelapped meeting, update the room to the ans (Max)
+        // Check if the meeting overlaps with the prev meeting
+        // If yes, move the pointer to the prev meeting
+        // Else move to the meeting
+        int curMeeting = 0;
+        while (curMeeting < meetings.size())
+        {
+            // cout << "(" << curMeeting << ") ";
+            int countRoom = 1;
+            int pointer = curMeeting + 1;
+            while (pointer < meetings.size() && meetings[pointer].start < meetings[curMeeting].end)
+            {
+                countRoom++;
+                pointer++;
+                // cout << pointer << " ";
+            }
+            //cout << "| ";
+            
+            int curEndpoint;
+            if (pointer < meetings.size()) curEndpoint = pointer;
+            else curEndpoint = pointer - 1;
+
+            int tmpPoint = curEndpoint - 1;
+            while (tmpPoint != curMeeting && meetings[curEndpoint].start <= meetings[tmpPoint].end)
+            {
+                if (meetings[curEndpoint].start == meetings[tmpPoint].end) countRoom--;
+                //cout << tmpPoint << ":" << countRoom << " ";
+                tmpPoint--;
+            }
+            ans = max(countRoom, ans);
+            if (pointer == meetings.size()) 
+            {
+                break;
+            }
+            curMeeting = tmpPoint + 1;
+        }
+        return ans;
+    }
+};
+
+
+/**
  * @brief Employee Free Time 
  * 
  * @param schedule  A list of intervals representing the working hours

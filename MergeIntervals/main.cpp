@@ -29,6 +29,12 @@ vector<vector<Interval>> IIArr2 {
   {{2, 3}, {5, 7}},
   {{5, 10}}
 };
+//* Conflicting Appointment
+vector<vector<Interval>> CAArr {
+  {{1, 4}, {2, 5}, {7, 9}},
+  {{6, 7}, {2, 4}, {8, 12}},
+  {{4, 5}, {2, 3}, {3, 6}}
+};
 //* Employee Free Time
 vector<vector<vector<Interval>>> EFTIntervals = {
   {{{1,3}, {5,6}}, {{2,3}, {6,8}}},
@@ -50,12 +56,9 @@ int main(int argc, char *argv[]) {
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (int i = 0; i < IINewIntervals.size(); i++) {
-        InsertInterval ii(IIntervals[i], IINewIntervals[i]);
-        for (auto interval : ii.solve()) {
-          cout << interval.start <<"-"<< interval.end << " ";
-        }
-        cout << endl;
+    for (int i = 0; i < CAArr.size(); i++) {
+        ConflictingAppointments ca(CAArr[i]);
+        cout << boolalpha << ca.solve() << endl;
     }
 
     /* End timing */
