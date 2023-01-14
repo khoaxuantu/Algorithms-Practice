@@ -8,6 +8,10 @@ using namespace std;
 vector<string> PPStr {
     "aba", "acb", "abb", "axbk"
 };
+//* Group Anagrams
+vector<vector<string>> GAStrs {
+    {"duel", "dule", "speed", "spede", "deul", "cars"}
+};
 
 int main(int argc, char const *argv[])
 {
@@ -18,15 +22,22 @@ int main(int argc, char const *argv[])
     start = clock();
     
     /* Compiler switch */
-    int _switch = 1;
+    int _switch = 0;
     
     /**
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (auto s : PPStr) {
-        PalindromePermutation pp(s);
-        cout << boolalpha << pp.solve() << endl;
+    for (auto s : GAStrs) {
+        GroupAnagrams ga(s);
+        for (auto arr : ga.solve()) {
+            cout << "[ ";
+            for (auto w : arr) {
+                cout << w << " ";
+            }
+            cout << "] ";
+        }
+        cout << endl;
     }
     
     /* End timing */

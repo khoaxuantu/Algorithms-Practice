@@ -88,4 +88,86 @@ public:
     }
 };
 
+
+/**
+ * @brief Group Anagrams
+ * 
+ * @param strs A list of words or phrases
+ * 
+ * @return :vector<vector<string>>: group the words that are anagrams of each other.
+ * An anagram is a word or a phrase formed from another word by rearranging them
+ */
+class GroupAnagrams
+{
+private:
+    vector<string> strs;
+    string encodeStr(string& s) {
+        string tmp;
+        for (int i = 0; i < 26; i++) tmp += '0';
+        for (char& c : s) {
+            int index = c - 'a';
+            tmp[index]++;
+        }
+        return tmp;
+    }
+public:
+    GroupAnagrams(vector<string>& input) : strs(input) {}
+    vector<vector<string>> solve() {
+        unordered_map<string, vector<string>> anagrams;
+        //* Count the freq of each word
+        string key;
+        for (auto& s : strs) {
+            key = encodeStr(s);
+            //* Push to the map
+            anagrams[key].push_back(s);
+        }
+        //* Get the ans
+        vector<vector<string>> words;
+        for (auto entry : anagrams) {
+            words.push_back(entry.second);
+        }
+        return words;
+    }
+};
+
+
+/**
+ * @brief Maximum Frequency Stack
+ * 
+ * @details Design a stack-like data structure. You should able to push
+ * elements to this data structure and pop elements with maximum frequency
+ * 
+ * @param freq Map the frequency of each element
+ * @param st A hash table which store the freq keys map to the data
+ * @param maxFreq Keep track the maximum frequency
+ */
+class FreqStack
+{
+private:
+    unordered_map<int, int> freq;
+    unordered_map<int, stack<int>> st;
+    int maxFreq = 0;
+public:
+    // Use constructor to initialize the maxFrequency
+    FreqStack() {}
+
+    // Use push function to push the data into the FreqStack
+    void push(int data) {
+        // TODO: Write your code here
+        freq[data]++;
+        st[freq[data]].push(data);
+        maxFreq = max(maxFreq, freq[data]);
+    }
+    
+    // Use the pop function to pop the data from the FreqStack
+    int pop() {
+        // TODO: Write your code here
+        int tmp = st[maxFreq].top();
+        st[maxFreq].pop();
+        freq[tmp]--;
+        if (st[maxFreq].empty()) maxFreq--;
+        return tmp;
+    }
+};
+
 #endif // SOLUTION_HPP
