@@ -35,6 +35,13 @@ vector<vector<Interval>> CAArr {
   {{6, 7}, {2, 4}, {8, 12}},
   {{4, 5}, {2, 3}, {3, 6}}
 };
+//* Minimum Meeting Rooms
+vector<vector<Interval>> MMRIntervals = {
+  {{1, 4}, {2, 5}, {7, 9}},
+  {{6, 7}, {2, 4}, {8, 12}},
+  {{1,4}, {2,3}, {3,6}},
+  {{4,5}, {2,3}, {2,4}, {3,5}}
+};
 //* Employee Free Time
 vector<vector<vector<Interval>>> EFTIntervals = {
   {{{1,3}, {5,6}}, {{2,3}, {6,8}}},
