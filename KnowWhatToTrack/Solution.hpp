@@ -170,4 +170,113 @@ public:
     }
 };
 
+
+/**
+ * @brief First Unique Character in a String
+ * 
+ * @param s An input string of lowercase characters
+ * 
+ * @return :int: The first non-repeating character's index in the s.
+ * Return -1 if there is no unique character 
+ */
+class FirstUniqueChar
+{
+private:
+    string s;
+public:
+    FirstUniqueChar(string& s) : s(s) {}
+    int solve() {
+        unordered_map<char, int> freq;
+        for (char& c : s) {
+            if (c != ' ') freq[c]++;
+        }
+        for (int i = 0; i < s.size(); i++) {
+            if (freq[s[i]] == 1) return i;
+        }
+        return -1;
+    }
+};
+
+
+/**
+ * @brief Find All Anagrams in a String
+ * 
+ * @param a The first input string
+ * @param b The second input string
+ * 
+ * @return :vector<int>: An array of all start indices of b's anagrams in a.
+ * We may return the answer in any order. An anagram is a word or phrase created
+ * by arranging the letters of another word or phrase while utilizing each of 
+ * the original letters exactly once. 
+ */
+class FindAllAnagrams
+{
+private:
+    string a;
+    string b;
+public:
+    FindAllAnagrams(string& a, string & b) : a(a), b(b) {}
+    vector<int> solve() {
+        //* Store the freq of b's chars
+        vector<int> ans;
+        if (b.size() == 0) return ans;
+        unordered_map<char, int> freq;
+        for (char& c : b) {
+            freq[c]++;
+        }        
+        //* Sliding Window in a
+        int start = 0, end = 0;
+        int count = 0;
+        while (end < a.size()) {
+            if (freq.count(a[end]) > 0) {
+                if (freq[a[end]] > 0) count++;
+                freq[a[end]]--;
+            }
+            end++;
+            if (count == b.size()) ans.push_back(start);
+            if (end - start + 1 > b.size()) {
+                if (freq.count(a[start]) > 0) {
+                    if (freq[a[start]] >= 0) count--;
+                    freq[a[start]]++;
+                }
+                start++;
+            }
+        }
+        return ans;
+    }
+};
+
+
+/**
+ * @brief Ransom note 
+ * 
+ * @param ransomNote the "ransom note" input string
+ * @param magazine the "magazine" input string
+ * 
+ * @return :boolean: check if the ransom note can be constructed using
+ * the letters from the magazine string
+ */
+class RansomNote
+{
+private:
+    string ransomNote;
+    string magazine;
+public:
+    RansomNote(string& a, string& b) : ransomNote(a), magazine(b) {}
+    bool solve() {
+        //* chars in ransome note must have in magazine's
+        //* chars freq is the same
+        unordered_map<char, int> rnMap;
+        unordered_map<char, int> mgMap;
+        for (char& c : ransomNote) rnMap[c]++;
+        for (char& c : magazine) mgMap[c]++;
+
+        for (auto& entry : rnMap) {
+            if (mgMap.count(entry.first) == 0) return false;
+            else if (mgMap[entry.first] < entry.second) return false;
+        }
+        return true;
+    }
+};
+
 #endif // SOLUTION_HPP
