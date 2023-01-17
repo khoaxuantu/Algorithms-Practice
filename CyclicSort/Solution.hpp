@@ -294,4 +294,62 @@ public:
     }
 };
 
+
+/**
+ * @brief Find the First K Missing Positive Numbers
+ * 
+ * @param nums An unsorted array containing numbers
+ * @param k A number 'K'
+ * 
+ * @return :vector<int>: The first 'K' missing positive numbers in nums
+ */
+class FirstKMissingPositive
+{
+private:
+    vector<int> nums;
+    int k;
+public:
+    FirstKMissingPositive(vector<int>& nums, int k) : nums(nums), k(k) {}
+    vector<int> solve() {
+        vector<int> missingNumbers;
+        // TODO: Write your code here
+        for (int n = 0; n < k; n++)
+        {
+            nums.push_back(0);
+        }
+        
+        // Place each num into the correct index
+            // Take the correct based on Zero or nonZero
+            // Check if the val is in the correct index or not
+            // If not then move to the next index
+        int i = 0;
+        while (i < nums.size())
+        {
+            // int j = haveZero ? nums[i] : nums[i] - 1;
+            int j = nums[i] - 1;
+            if (nums[i] > 0 && nums[i] <= nums.size() && nums[i] != nums[j])
+            {
+                Swap::arrSwap(nums, i, j);
+            }
+            else
+            {
+                i++;
+            }
+        }
+        
+        // Traverse the nums again and find the missing num 
+        for (i = 0; i < nums.size(); i++)
+        {
+            // cout << nums[i] << " ";
+            // int j = haveZero ? nums[i] : nums[i] - 1;
+            if (nums[i] != i + 1 && missingNumbers.size() < k)
+            {
+                missingNumbers.push_back(i + 1);
+            }
+        }
+        // cout << endl;
+        return missingNumbers;
+    }
+};
+
 #endif // SOLUTION_HPP

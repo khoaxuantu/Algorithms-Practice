@@ -37,6 +37,12 @@ vector<vector<int>> FSMPNArr {
     {-3, 1, 5, 4, 2},
     {3, -2, 0, 1, 2}
 };
+//* Find the First K Missing Positive Numbers
+vector<vector<int>> FFKMPNArr {
+    {3, -1, 4, 5, 5},
+    {2, 3, 4}, {-2, -3, 4}
+};
+vector<int> FFKMPNArr {3,3,2};
 
 int main(int argc, char const *argv[])
 {
