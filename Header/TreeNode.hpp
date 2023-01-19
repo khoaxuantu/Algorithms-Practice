@@ -85,8 +85,12 @@ public:
     BinaryTree(vector<int>& arr) {
         constructBFS(arr);
     }
+    BinaryTree(vector<string>& arr) {
+        constructBFSByStr(arr);
+    }
 
     void constructBFS(vector<int>& arr);
+    void constructBFSByStr(vector<string>& arr);
     void constructDFS(vector<int>& arr);
     void printTree();
     void printLevelOrderTree();
@@ -115,6 +119,38 @@ void BinaryTree::constructBFS(vector<int>& arr)
             newNode = new TreeNode(arr[j]);
             curNode->right = newNode;
             q.push(newNode);
+            j++;
+            if (j >= arr.size()) return;
+        }
+    }
+    
+}
+
+void BinaryTree::constructBFSByStr(vector<string>& arr) {
+    root = new TreeNode(stoi(arr[0]));
+    queue<TreeNode*> q;
+    q.push(root);
+    int j = 1;
+    TreeNode* newNode;
+    while (!q.empty() && j < arr.size())
+    {
+        int size = q.size();
+        for (int i = 0; i < size; i++) {
+            auto curNode = q.front();
+            q.pop();
+            if (arr[j] != ".") {
+                newNode = new TreeNode(stoi(arr[j]));
+                q.push(newNode);
+            }
+            else newNode = nullptr;
+            curNode->left = newNode;
+            j++;
+            if (arr[j] != ".") {
+                newNode = new TreeNode(stoi(arr[j]));
+                q.push(newNode);
+            }
+            else newNode = nullptr;
+            curNode->right = newNode;
             j++;
             if (j >= arr.size()) return;
         }
