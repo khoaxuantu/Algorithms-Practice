@@ -2,44 +2,32 @@
 
 using namespace std;
 
-class Solution
-{
-private:
-    static void swap(vector<int>& arr, int a, int b)
-    {
-        int tmp = arr[a]^1;
-        arr[a] = arr[b]^1;
-        arr[b] = tmp;
-    }
+#include "Solution.hpp"
 
-public:
-    static vector<vector<int>> solve(vector<vector<int>>& arr)
+//* Single Number
+vector<vector<int>> SNArr {
+    {1, 4, 2, 1, 3, 2, 3},
+    {7,9,7}
+};
+//* Two Single Number
+vector<vector<int>> TSNArr {
+    {1, 4, 2, 1, 3, 5, 6, 2, 3, 5},
+    {2, 1, 3, 2}
+};
+//* Complement of Base 10 Number
+vector<int> CBNNums {8,10};
+//* Flip and Invert Image
+vector<vector<vector<int>>> FIIArr {
     {
-        // TODO: Write your code here
-        int start = 0, end = arr[0].size()-1;
-        while (start <= end)
-        {
-            for (int i = 0; i < arr.size(); i++)
-            {
-                if (start != end)
-                {
-                    swap(arr[i], start, end);
-                }
-                else arr[i][start] ^= 1;
-            }
-            start++;
-            end--;
-        }
-        return arr;
-    }
-
-    static void print(const vector<vector<int>> arr) {
-      for(int i=0; i < arr.size(); i++) {
-        for (int j=0; j < arr[i].size(); j++) {
-          cout << arr[i][j] << " ";
-        }
-        cout << endl;
-      }
+        {1,0,1},
+        {1,1,1},
+        {0,1,1}
+    },
+    {
+        {1,1,0,0},
+        {1,0,0,1},
+        {0,1,1,1},
+        {1,0,1,0}
     }
 };
 
@@ -51,12 +39,14 @@ int main(int argc, char const *argv[])
     /* Start timing */
     start = clock();
     
-    vector<vector<int>> arr = vector<vector<int>>{{1, 0, 1}, {1, 1, 1}, {0, 1, 1}};
-    Solution::print(Solution::solve(arr));
-    cout << endl;
-
-    vector<vector<int>> arr2 = vector<vector<int>>{{1,1,0,0},{1,0,0,1},{0,1,1,1},{1,0,1,0}};
-    Solution::print(Solution::solve(arr2));
+    /* Compiler switch */
+    int _switch = 1;
+    
+    /**
+     * TODO: Modify input here
+     * TODO: Print the output
+     */
+    
     
     /* End timing */
     end = clock();
@@ -67,5 +57,4 @@ int main(int argc, char const *argv[])
          << time_taken << setprecision(5);
     cout << " ms " << endl;
     cout << endl;
-    return 0;
 }
