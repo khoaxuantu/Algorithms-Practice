@@ -1,46 +1,45 @@
 #include <bits/stdc++.h>
 
-
 using namespace std;
 
+#include "../Header/TreeNode.hpp"
+#include "Solution.hpp"
 
-class TreeNode
-{
-public:
-    int val = 0;
-    TreeNode* left;
-    TreeNode* right;
-
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+//* Binary Tree Path Sum
+vector<vector<string>> BTPSTrees {
+    {"1","2","3","4","5","6","7"},
+    {"12","7","1",".","9","10","5"}
 };
-
-
-class Solution
-{
-public:
-    static int solve(TreeNode* root)
-    {
-        // TODO: Write your code here
-        int ans = INT_MIN;
-        findSubSum(root, ans);
-        return ans;
-    }
-
-private:
-    static int findSubSum(TreeNode* node, int& maxSum)
-    {
-        // Validate the node
-        if (!node) return 0;
-        // Traverse the child nodes
-        int leftSubSum = findSubSum(node->left, maxSum);
-        int rightSubSum = findSubSum(node->right, maxSum);
-        // Update the maxSum
-        maxSum = max(maxSum, leftSubSum + rightSubSum + node->val);
-        // Return the maximum subSum + nodeval
-        return max(leftSubSum, rightSubSum) + node->val;
-    }
+//* All Paths for a Sum
+vector<vector<string>> APSTrees {
+    {"1","2","3","4","5","6","7"},
+    {"12","7","1",".","9","10","5"}
 };
-
+//* Sum of Path Numbers
+vector<vector<string>> SPNTrees {
+    {"1","7","9",".",".","2","9"},
+    {"1","0","1",".","1","6","5"}
+};
+//* Path With Given Sequence
+vector<vector<string>> PGSTrees {
+    {"1","7","9",".",".","2","9"},
+    {"1","0","1",".","1","6","5"}
+};
+//* Count Paths for a Sum
+vector<vector<string>> CPSTrees {
+    {"1","7","9","6","5","2","3"},
+    {"12","7","1",".","4","10","5"}
+};
+//* Tree Diameter
+vector<vector<string>> TDTrees {
+    {"1","2","3",".","4","5","6"},
+    {"1","2","3",".",".","5","6","7","8",".","9",".","10",".","11"}
+};
+//* Path with Maximum Sum
+vector<vector<string>> PMSTrees {
+    {"1","2","3",".","4","5","6"},
+    {"1","2","3","1","3","5","6",".",".",".",".","7","8",".","9"}
+};
 
 int main(int argc, char const *argv[])
 {
@@ -50,39 +49,15 @@ int main(int argc, char const *argv[])
     /* Start timing */
     start = clock();
     
-    TreeNode *root = new TreeNode(1);
-    root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
-    root->left->left = new TreeNode(4);
-    root->right->left = new TreeNode(5);
-    root->right->right = new TreeNode(6);
-    cout << "Tree diameter: \n" << Solution::solve(root) << endl;
-    root->left->left = new TreeNode(1);
-    root->left->right = new TreeNode(3);
-    root->right->left = new TreeNode(5);
-    root->right->right = new TreeNode(6);
-    root->right->left->left = new TreeNode(7);
-    root->right->left->right = new TreeNode(8);
-    root->right->right->left = new TreeNode(9);
-    cout << "Tree diameter: \n" << Solution::solve(root) << endl;
-    root = new TreeNode(-1);
-    root->left = new TreeNode(-3);
-    cout << "Tree diameter: \n" << Solution::solve(root) << endl;
-    // for (auto vec : result) {
-    //     for (auto num : vec) {
-    //     cout << num << " ";
-    //     }
-    //     cout << endl;
-    // }
-
-    // vector<vector<int>> input {
-    //     {1,0,7},
-    //     {1,1,6}
-    // };
-    // for (auto arr : input)
-    // {
-    //     cout << "Tree has path sequence: " << Solution::solve(root, arr) << endl;
-    // }
+    /* Compiler switch */
+    int _switch = 1;
+    
+    /**
+     * TODO: Modify input here
+     * TODO: Print the output
+     */
+    
+    
     /* End timing */
     end = clock();
     
@@ -92,5 +67,4 @@ int main(int argc, char const *argv[])
          << time_taken << setprecision(5);
     cout << " ms " << endl;
     cout << endl;
-    return 0;
 }
