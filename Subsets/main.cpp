@@ -1,57 +1,38 @@
 #include <bits/stdc++.h>
 
 #include "../Header/TreeNode.hpp"
+#include "Solution.hpp"
 
 using namespace std;
 
-class AbbreviatedWord {
-public:
-    string str;
-    int start = 0;
-    int count = 0;
-
-    AbbreviatedWord(string str, int start, int count) {
-        this->str = str;
-        this->start = start;
-        this->count = count;
-    }
+//* Subsets
+vector<vector<int>> SSArr {
+    {1,3}, {1,5,3}
 };
-
-
-class Solution {
-private:
-
-
-public:
-    unordered_map<int, int> mp;
-    int solve(const int& n)
-    {
-        int result = 0;
-        // TODO: Write your code here
-        // Check if the input is in the hash map
-        if (mp.find(n) != mp.end())
-        {
-            return mp[n];
-        }
-        // Base case: If the num reaches its limit, return 1
-        if (n <= 1) return 1;
-        // Traverse every num in range input
-        // For each num as root
-            // Call the subtrees recursively
-        for (int i = 1; i <= n; i++)
-        {
-            int leftCount = solve(i-1);
-            int rightCount = solve(n - i);
-
-            result += leftCount * rightCount;
-        }
-        
-        // Update the hash map
-        mp[n] = result;
-        return result;
-    }
+//* Subsets With Duplicates
+vector<vector<int>> SWDArr {
+    {1,3,3}, {1,5,3,3}
 };
-
+//* Permutations
+vector<vector<int>> PArr {
+    {1,2,3}, {1,3,5}
+};
+//* String Permutations by Changing Case 
+vector<string> SPCCStrs {
+    "ad52", "ab7c"
+};
+//* Balanced Parentheses
+vector<int> BPNums {1,2,3};
+//* Unique Generalized Abbreviations
+vector<string> UGAStr {
+    "BAT","code"
+};
+//* Evaluate Expression
+vector<string> EEStr {
+    "1+2*3", "2*3-4-5"
+};
+//* Structurally Unique Binary Search Trees
+vector<int> SUBSTNums {2,3};
 
 int main(int argc, char const *argv[])
 {
@@ -61,27 +42,14 @@ int main(int argc, char const *argv[])
     /* Start timing */
     start = clock();
     
-    vector<int> input {
-        2, 3, 19
-    };
-
-    int result;
-    for (auto arr : input)
-    {
-        Solution solution;
-        result = solution.solve(arr);
-        cout << "Total trees: " << endl;
-        // for (auto vec : result) {
-        //     // cout << "{";
-        //     // for (auto num : vec) {
-        //     // cout << num;
-        //     // }
-        //     // cout << "} ";
-        //     cout << vec << " ";
-        // }
-        cout << result;
-        cout << endl;
-    }
+    /* Compiler switch */
+    int _switch = 1;
+    
+    /**
+     * TODO: Modify input here
+     * TODO: Print the output
+     */
+    
     
     /* End timing */
     end = clock();
