@@ -1,89 +1,72 @@
 #include <bits/stdc++.h>
 
-// #include "../Header/Point.hpp"
+#include "../Header/Point.hpp"
+#include "Solution.hpp"
 
 using namespace std;
 
-class Element
-{
-private:
-public:
-    int val=0, freq=0, order=0;
-    Element(int val, int frequency, int sequence)
-    {
-        this->val = val;
-        this->freq = frequency;
-        this->order = sequence;
-    }
+//* Top K Numbers
+vector<vector<int>> TKNArr {
+    {3,1,5,12,2,11},
+    {5,12,11,-1,12}
 };
-
-
-class Solution
-{
-private:
-    int order = 0;
-    // unordered_map<int,int> sequenceNum;
-    // Num: freq
-    queue<Element> cache;
-    unordered_map<int, int> numMap;
-    
-    struct custCmp {
-        bool operator()(const Element& x, const Element& y)
-        {
-            if (x.freq != y.freq)
-            {
-                return x.freq < y.freq;
-            }
-            return x.order < y.order;
-        }
-    };
-    priority_queue<Element, vector<Element>, custCmp> maxHeap;
-
-public:
-    static int solve(const vector<char>& arr, int k)
-    {
-        int intervalCount = 0;
-        // TODO: Write your code here
-        
-        return intervalCount;
-    }
-
-    void printHeap()
-    {
-        priority_queue<Element, vector<Element>, custCmp> copyHeap(maxHeap);
-        while (!copyHeap.empty())
-        {
-            cout << copyHeap.top().val << ":" << copyHeap.top().freq << ":" << copyHeap.top().order << " ";
-            copyHeap.pop();
-        }
-    }
-
-    void push(int num)
-    {
-        // Take the order 
-        order++;
-        // sequenceNum[num] = order;
-
-        numMap[num]++;
-        maxHeap.push(Element(num, numMap[num], order));
-    }
-
-    int pop()
-    {
-        auto mostFreqNum = maxHeap.top();
-        maxHeap.pop();
-
-        if (numMap[mostFreqNum.val] > 1)
-        {
-            numMap[mostFreqNum.val]--;
-        }
-        else numMap.erase(mostFreqNum.val);
-        
-        this->printHeap();
-        return mostFreqNum.val;
-    }
-
+vector<int> TKNK {3,3};
+//* Kth Smallest Number
+vector<vector<int>> KSNArr {
+    {1, 5, 12, 2, 11, 5},
+    {1, 5, 12, 2, 11, 5},
+    {5,12,11,-1,12}
 };
+vector<int> KSNK {3,4,3};
+//* K Closet Point to the Origin
+vector<vector<Point>> KCPOArr {
+    {{1,2},{1,3}},
+    {{1,3},{3,4},{2,-1}}
+};
+vector<int> KCPOK {1,2};
+//* Connect Ropes
+vector<vector<int>> CRArr {
+    {1,3,11,5},
+    {3,4,5,6},
+    {1,3,11,5,2}
+};
+//* Top K Frequent Numbers
+vector<vector<int>> TKFNArr {
+    {1, 3, 5, 12, 11, 12, 11},
+    {5,12,11,3,11}
+};
+vector<int> TKFNK {2,2};
+//* Frequency Sort
+vector<string> FSStr {
+    "Programming", "abcbab"
+};
+//* Kth Largest Number in a Stream
+vector<vector<int>> KLNSArr {
+    {3,1,5,12,2,11}
+};
+vector<int> KLNSK {4};
+//* K Closet Numbers
+vector<vector<int>> KCNArr {
+    {5,6,7,8,9},
+    {2,4,5,6,9},
+    {2,4,5,6,9}
+};
+vector<int> KCNK {3,3,3};
+vector<int> KCNX {7,6,10};
+//* MAximum Distinct Elements
+vector<vector<int>> MDEArr {
+    {7, 3, 5, 8, 5, 3, 3},
+    {3,5,12,11,12},
+    {1, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5}
+};
+vector<int> MDEK {2,3,2};
+//* Sum of Elements
+vector<vector<int>> SEArr {
+    {1, 3, 12, 5, 15, 11},
+    {3,5,8,7}
+};
+vector<int> SEK1 {3,1};
+vector<int> SEK2 {6,4};
 
 int main(int argc, char const *argv[])
 {
@@ -93,21 +76,14 @@ int main(int argc, char const *argv[])
     /* Start timing */
     start = clock();
     
-    Solution frequencyStack;
-    frequencyStack.push(1);
-    frequencyStack.push(2);
-    frequencyStack.push(3);
-    frequencyStack.push(2);
-    frequencyStack.push(1);
-    frequencyStack.push(2);
-    frequencyStack.push(5); // 2:3 1:2 3:1 5:1
-    frequencyStack.printHeap();
-    cout << endl;
-    cout << frequencyStack.pop() << endl;
-    cout << frequencyStack.pop() << endl;
-  cout << frequencyStack.pop() << endl;
-  cout << frequencyStack.pop() << endl;
-    cout << frequencyStack.pop() << endl;
+    /* Compiler switch */
+    int _switch = 1;
+    
+    /**
+     * TODO: Modify input here
+     * TODO: Print the output
+     */
+    
     
     /* End timing */
     end = clock();
@@ -118,5 +94,4 @@ int main(int argc, char const *argv[])
          << time_taken << setprecision(5);
     cout << " ms " << endl;
     cout << endl;
-    return 0;
 }
