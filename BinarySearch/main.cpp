@@ -2,6 +2,8 @@
 
 using namespace std;
 
+#include "Solution.hpp"
+
 class ArrayReader {
 public:
     vector<int> arr;
@@ -16,37 +18,71 @@ public:
     }
 };
 
-
-class Solution
-{
-private:
-    
-
-public:
-    static int solve(const vector<int>& arr)
-    {
-        // TODO: Write your code here
-        // If the first element is larger than the last one, return 0
-        int start = 0, end = arr.size() - 1;
-        if (arr[start] < arr[end]) return 0;
-        // Perform the binary search pattern
-
-        // Take start, end
-            // Cal mid
-            // If mid <= end, mid = end
-            // IF mid > end, mid = start
-        int mid;
-        while (start < end)
-        {
-            mid = start + (end-start)/2;
-
-            if (arr[mid] <= arr[end]) end = mid;
-            else start = mid+1;
-        }
-        
-        return start;
-    }
+//* Order-agnostic Binary Search
+vector<vector<int>> OBSArr {
+    {4,6,10},
+    {1,2,3,4,5,6,7},
+    {10,6,4},
+    {10,6,4}
 };
+vector<int> OBSKey {10,5,10,4};
+//* Ceiling of a Number
+vector<vector<int>> CNArr {
+    {4,6,10},
+    {1,3,8,10,15},
+    {4,6,10},
+    {4,6,10}
+};
+vector<int> CNKey {6,12,17,-1};
+//* Next Letter
+vector<vector<char>> NLArr {
+    {'a','c','f','h'},
+    {'a','c','f','h'},
+    {'a','c','f','h'}
+};
+vector<char> NLKey {'f','b','m','h'};
+//* Number Range
+vector<vector<int>> NRArr {
+    {4,6,6,6,9},
+    {1,3,8,10,15},
+    {1,3,8,10,15}
+};
+vector<int> NRKey {6,10,12};
+//* Minimum Difference Element
+vector<vector<int>> MDEArr {
+    {4,6,10},
+    {4,6,10},
+    {1,3,8,10,15}
+};
+vector<int> MDEKey {7,4,12};
+//* Bitonic Array Maximum
+vector<vector<int>> BAMArr {
+    {1,3,8,12,4,2},
+    {3,8,3,1},
+    {1,3,8,12},
+    {10,9,8}
+};
+//* Search Bitonic Array
+vector<vector<int>> SBAArr {
+    {1,3,8,4,3},
+    {3,8,3,1},
+    {1,3,8,12},
+    {10,9,8}
+};
+vector<int> SBAKey {4,8,12,10};
+//* Search in Rotated Array
+vector<vector<int>> SRAArr {
+    {10,15,1,3,8},
+    {4, 5, 7, 9, 10, -1, 2}
+};
+vector<int> SRAKey {15,10};
+//* Rotation Count
+vector<vector<int>> RCArr {
+    {10, 15, 1, 3, 8},
+    {4, 5, 7, 9, 10, -1, 2},
+    {1, 3, 8, 10}
+};
+vector<int> RCKey {2,5,0};
 
 int main(int argc, char const *argv[])
 {
@@ -55,10 +91,15 @@ int main(int argc, char const *argv[])
     
     /* Start timing */
     start = clock();
-
-    cout << Solution::solve(vector<int>{10, 15, 1, 3, 8}) << endl;
-    cout << Solution::solve(vector<int>{4, 5, 7, 9, 10, -1, 2}) << endl;
-    cout << Solution::solve(vector<int>{1, 3, 8, 10}) << endl;
+    
+    /* Compiler switch */
+    int _switch = 1;
+    
+    /**
+     * TODO: Modify input here
+     * TODO: Print the output
+     */
+    
     
     /* End timing */
     end = clock();
@@ -69,5 +110,4 @@ int main(int argc, char const *argv[])
          << time_taken << setprecision(5);
     cout << " ms " << endl;
     cout << endl;
-    return 0;
 }
