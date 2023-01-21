@@ -465,4 +465,191 @@ public:
     }
 };
 
+
+/**
+ * @brief Rearrange String
+ * 
+ * @param str An input string
+ * 
+ * @return :string: A new string rearranged from the str such that
+ * no two same characters come next to each other. If the str cannot
+ * be rearranged. return ""
+ */
+class RearrangeString 
+{
+private:
+    string str;
+public:
+    RearrangeString(string& s) : str(s) {}
+    string solve() {
+        // TODO: Write your code here
+        string ans = "";
+        // Store freq of each char into a map
+        unordered_map<char, int> freq;
+        for (char c : str)
+        {
+            freq[c]++;
+        }
+        // Push the freq to a min heap
+        auto custCmp = [](pair<int,char>& x, pair<int,char>& y){
+            return x.first < y.first;
+        };
+        priority_queue<pair<int,char>, vector<pair<int,char>>, decltype(custCmp)> minHeap(custCmp);
+
+        for (auto entry : freq)
+        {
+            minHeap.push(make_pair(entry.second, entry.first));
+        }
+        pair<int, char> prevEntry (-1, -1);
+        while (!minHeap.empty())
+        {
+            pair<int,char> curChar = minHeap.top();
+            minHeap.pop();
+
+            if (prevEntry.first > 0)
+            {
+                minHeap.push(prevEntry);
+            }
+
+            ans += curChar.second;
+            curChar.first--;
+            prevEntry = curChar;
+        }
+        if (ans.length() != str.length()) return "";
+        return ans;
+    }
+};
+
+
+/**
+ * @brief Rearrange String K Distance Apart
+ * 
+ * @param str An input string
+ * @param k An input number K
+ * 
+ * @return :string: A rearranged string such that the same characters
+ * are at least K distance apart from each other
+ */
+class RearrangeStringKDistanceApart
+{
+private:
+    string str;
+    int k;
+public:
+    RearrangeStringKDistanceApart(string& s, int k) : str(s), k(k) {}
+    string solve() {
+        // TODO: Write your code here
+        string ans = "";
+        // Store the freq of each char into a map
+        unordered_map<char, int> freq;
+        for (char c : str)
+        {
+            freq[c]++;
+        }
+        // Max heap: 
+        // Store all char in the max heap
+        auto custCmp = [](pair<char,int>& x, pair<char,int>& y){
+            return x.second < y.second;
+        };
+        priority_queue<pair<char,int>, vector<pair<char,int>>, decltype(custCmp)> maxHeap(custCmp);
+        for (auto entry : freq)
+        {
+            maxHeap.push(make_pair(entry.first, entry.second));
+        }
+        // Traverse the max heap again
+        // For each char add to the ans, store the char in another queue
+            // If the queue size is equal to k, add the front element back to the heap
+        queue<pair<char,int>> cache;
+        while (!maxHeap.empty())
+        {
+            pair<char, int> curChar = maxHeap.top();
+            maxHeap.pop();
+
+            ans += curChar.first;
+            curChar.second--;
+
+            cache.push(curChar);
+            if (cache.size() == k)
+            {
+                if(cache.front().second > 0) maxHeap.push(cache.front());
+                cache.pop();
+            }
+        }
+        if (ans.length() != str.length()) return "";
+        return ans;
+    }
+}; 
+
+
+/**
+ * @brief Scheduling Tasks
+ * 
+ * @param tasks A list of tasks that need to be run in any order
+ * @param k Cooling periods for all tasks
+ * 
+ * @return :int: The minimum number of CPU intervals that the 
+ * server needs to finish all tasks
+ */
+class SchedulingTasks
+{
+private:
+    vector<char> tasks;
+    int k;
+public:
+    SchedulingTasks(vector<char>& tasks, int k) : tasks(tasks), k(k) {}
+    int solve() {
+        int intervalCount = 0;
+        // TODO: Write your code here
+        // Store the freq of each task into a map
+        unordered_map<char, int> freq;
+        for (char c : tasks)
+        {
+            freq[c]++;
+        }
+        // Push the tasks to a max heap (pair<task, freq>)
+        auto custCmp = [](pair<char, int>& x, pair<char, int>& y){
+            return x.second < y.second;
+        };
+        priority_queue<pair<char,int>, vector<pair<char,int>>, decltype(custCmp)> maxHeap(custCmp);
+        for (auto entry : freq)
+        {
+            maxHeap.push(make_pair(entry.first, entry.second));
+        }
+        // Init a queue for cooldown
+        queue<pair<char,int>> cd;
+        // Traverse the heap
+        // For each task
+            // Pop from the heap and push to the cooldown queue
+            // If the queue size is equal k+1
+                // If the queue front is not idle, push to the heap
+            // If the queue front is <= 0, break
+        while (true)
+        {
+            intervalCount++;
+            if (!maxHeap.empty())
+            {
+                pair<char,int> curTask = maxHeap.top();
+                maxHeap.pop();
+                curTask.second--;
+                cd.push(curTask);
+            }
+            else if (cd.size() < k + 1)
+            {
+                cd.push(make_pair('_', -1));
+            }
+
+            if (cd.size() == k+1)
+            {
+                if (cd.front().second > 0)
+                {
+                    maxHeap.push(cd.front());
+                }
+                cd.pop();
+            }
+            if (maxHeap.empty() && cd.front().second <= 0) break;
+        }
+        return intervalCount;
+    }
+};
+
 #endif // SOLUTION_HPP

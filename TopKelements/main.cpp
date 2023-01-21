@@ -67,6 +67,21 @@ vector<vector<int>> SEArr {
 };
 vector<int> SEK1 {3,1};
 vector<int> SEK2 {6,4};
+//* Rearrange String
+vector<string> RSStr {
+    "aappp", "Programming", "aapa"
+};
+//* Rearrange String K Distance Apart
+vector<string> RSKDAStr {
+    "mmpp", "Programming", "aab", "aappa"
+};
+vector<int> RSKDAK {2,3,2,3};
+//* Scheduling Tasks
+vector<vector<char>> STTasks {
+    {'a','a','a','b','c','c'},
+    {'a','b','a'}
+};
+vector<int> STCd {2,3};
 
 int main(int argc, char const *argv[])
 {
