@@ -1,57 +1,55 @@
 #include <bits/stdc++.h>
 
-#include "../Header/ListNode.hpp"
-
-#define pairMatrix pair<int, pair<int,int>>  // <nums, maximum avail sum<nums2Index, sum>>
-
 using namespace std;
 
+#include "../Header/ListNode.hpp"
+#include "Solution.hpp"
 
-class Solution
-{
-public:
-    static vector<pair<int, int>> solve(const vector<int>& nums1, const vector<int>& nums2, int k)
+//* Merge K Sorted Lists
+vector<vector<vector<int>>> MKSLArr {
     {
-        // TODO: Write your code here
-        vector<pair<int, int>> result;
-        // Init a maxHeap to keep track the nums <nums, maximum avail sum<nums2Index, sum>>
-        // Only push element from nums1 to the heap
-        // Keep track the maximum avail sum for each num
-        auto custCmp = [](const pairMatrix& x, const pairMatrix& y){
-            return x.second.second < y.second.second;
-        };
-        priority_queue<pairMatrix, vector<pairMatrix>, decltype(custCmp)> maxHeap(custCmp);
-        // Add the elements of the nums1 list // 9 8 2       
-        for (auto n : nums1)
-        {
-            maxHeap.push(make_pair(n, make_pair(0, n + nums2[0])));
-        }
-        // Traverse the heap
-        // For each num, pop out of the heap
-        // Push to the result
-        // nums2Index++
-        // If nums2Index < nums2 size, push back to the heap
-        while (!maxHeap.empty())
-        {
-            auto curSum = maxHeap.top();
-            maxHeap.pop();
-            result.push_back(make_pair(curSum.first, nums2[curSum.second.first]));
-            k--;
-            if (k == 0) break;
-
-            curSum.second.first++;
-            int nums2Index = curSum.second.first;
-            if (nums2Index < nums2.size())
-            {
-                curSum.second.second = curSum.first + nums2[nums2Index];
-                maxHeap.push(curSum);
-            }
-        }
-
-        return result;
+        {2,6,8}, {3,6,7}, {1,3,4}
+    },
+    {
+        {5,8,9}, {1,7}
     }
 };
-
+//* K Smallest Number in M Sorted Lists
+vector<vector<vector<int>>> KSNMSLArr {
+    {
+        {2,6,8}, {3,6,7}, {1,3,4}
+    },
+    {
+        {5,8,9}, {1,7}
+    }
+};
+vector<int> KSNMSLK {5,3};
+//* Kth Smallest Number in a Sorted Matrix
+vector<vector<vector<int>>> KSNSMMatrix {
+    {
+        {2,6,8},
+        {3,7,10},
+        {5,8,11}
+    }
+};
+vector<int> KSNSMK {5};
+//* Smallest Number Range
+vector<vector<vector<int>>> SNRArr {
+    {
+        {1,5,8}, {4,12}, {7,8,10}
+    },
+    {
+        {1,9},{4,12},{7,10,16}
+    }
+};
+//* K Pairs With Largest Sums
+vector<vector<int>> KPWLSArr1 {
+    {9,8,2}, {5,2,1}
+};
+vector<vector<int>> KPWLSArr2 {
+    {6,3,1}, {2,-1}
+};
+vector<int> KPWLSK {3,3};
 
 int main(int argc, char const *argv[])
 {
@@ -61,18 +59,15 @@ int main(int argc, char const *argv[])
     /* Start timing */
     start = clock();
     
-    auto result = Solution::solve({9, 8, 2}, {6, 3, 1}, 3);
-    cout << "Pairs with largest sum are: ";
-    for (auto pair : result) {
-        cout << "[" << pair.first << ", " << pair.second << "] ";
-    }cout << endl;
+    /* Compiler switch */
+    int _switch = 1;
     
-    result = Solution::solve({5,2,1}, {2,-1}, 3);
-    cout << "Pairs with largest sum are: ";
-    for (auto pair : result) {
-        cout << "[" << pair.first << ", " << pair.second << "] ";
-    }cout << endl;
-
+    /**
+     * TODO: Modify input here
+     * TODO: Print the output
+     */
+    
+    
     /* End timing */
     end = clock();
     
@@ -82,5 +77,4 @@ int main(int argc, char const *argv[])
          << time_taken << setprecision(5);
     cout << " ms " << endl;
     cout << endl;
-    return 0;
 }
