@@ -10,6 +10,26 @@ vector<vector<vector<int>>> RCEdges {
     {{1,2},{2,3},{3,4},{1,4},{1,5}},
     {{1,2},{2,3},{2,4},{2,5},{3,5}}
 };
+//* Number of Islands
+vector<vector<vector<char>>> NIGrids {
+    {
+        {'1','1','1'},
+        {'0','1','0'},
+        {'1','0','0'},
+        {'1','0','1'}
+    },
+    {
+        {'0','1','0'},
+        {'1','0','1'},
+        {'0','1','0'}
+    },
+    {
+        {'1','0','0','0'},
+        {'0','1','0','0'},
+        {'0','0','1','0'},
+        {'0','0','0','1'}
+    }
+};
 
 int main(int argc, char const *argv[])
 {
@@ -26,12 +46,9 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (auto edges : RCEdges) {
-        RedundantConnection rc(edges);
-        for (auto e : rc.solve()) {
-            cout << e << " ";
-        }
-        cout << endl;
+    for (auto grid : NIGrids) {
+        NumberOfIslands ni(grid);
+        cout << ni.solve() << endl;
     }
     
     /* End timing */
