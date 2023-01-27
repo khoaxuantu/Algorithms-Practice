@@ -30,6 +30,27 @@ vector<vector<vector<char>>> NIGrids {
         {'0','0','0','1'}
     }
 };
+//* Last Day Where You Can Still Cross
+vector<vector<vector<int>>> LDWYCSCCells {
+    {
+        {1,2},{2,1},{3,3},{2,2},{1,1},{1,3},{2,3},{3,2},{3,1}
+    },
+    {
+        {2,1},{3,3},{1,1},{1,3},{3,4},{3,1},{1,2},{3,2},{2,2},{1,4},{2,3},{2,4}
+    },
+    {
+        {3,2},{1,3},{2,2},{3,1},{1,1},{1,2},{2,3},{3,3},{2,1}
+    },
+    {
+        {1,2},{1,4},{2,1},{1,1},{2,4},{1,3},{2,3},{2,2}
+    },
+    {
+        {2,3},{1,1},{2,1},{4,3},{3,3},{4,1},{4,2},{1,3},{3,2},{1,2},{2,2},{3,1}
+    }
+};
+vector<pair<int,int>> LDWYCSCSize {
+    {3,3},{3,4},{3,3},{2,4},{4,3}
+};
 
 int main(int argc, char const *argv[])
 {
@@ -46,9 +67,9 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (auto grid : NIGrids) {
-        NumberOfIslands ni(grid);
-        cout << ni.solve() << endl;
+    for (int i = 0; i < LDWYCSCCells.size(); i++) {
+        LastDayCanCross ldcc(LDWYCSCCells[i], LDWYCSCSize[i].first, LDWYCSCSize[i].second);
+        cout<< ldcc.solve() << endl;
     }
     
     /* End timing */

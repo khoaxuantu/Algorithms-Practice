@@ -45,6 +45,13 @@ public:
         }
         count--;
     }
+    //? Last Day Where You Can still Cross
+    int getTopParent() {
+        return find(0);
+    }
+    int getBottomParent() {
+        return find(id.size()-1);
+    }
 };
 
 
@@ -121,6 +128,64 @@ public:
             }
         }
         return UF.getCount();
+    }
+};
+
+
+/**
+ * @brief Last Day Where You Can still Cross
+ *  
+ * @param cells A based mxn matrix where 0 represents land and 1
+ * represents water
+ * @param row The matrix rows
+ * @param col The matrix columns
+ */
+class LastDayCanCross
+{
+private:
+    vector<vector<int>> cells;
+    int row, col;
+    vector<int> offset {0, -1, 0, 1, 0};
+public:
+    LastDayCanCross(vector<vector<int>>& cells, int row, int col) : 
+        cells(cells), row(row), col(col) {}
+    int solve() {
+        //* Init an union find with 1d row*col+2 array (+1 for top and +1 for bottom connection)
+        UnionFind uf(row*col + 2);
+        //* Init a grid and mark all cells in it filled with water
+        vector<vector<int>> grid(row, vector<int>(col, 1));
+        //* Traverse from the last cell in cells
+            // Mark the current cell as 0 and find its index: rI*col + cI
+            // Check whether it can move in any possible direction. If yes, connect to the current cell
+            // Connection with top and bottom row
+
+        // 111
+        // 111
+        // 011
+        int i = cells.size() - 1;
+        int rowIndex, colIndex;
+        while (i >= 0 && uf.getBottomParent() != uf.getTopParent())
+        {
+            rowIndex = cells[i][0] - 1;
+            colIndex = cells[i][1] - 1;
+            grid[rowIndex][colIndex] = 0;
+            for (int k = 1; k <= 4; k++) {
+                int r = rowIndex + offset[k-1];
+                int c = colIndex + offset[k];
+                if (r >= 0 && r < row &&
+                    c >= 0 && c < col && grid[r][c] == 0) {
+                    uf.Union(rowIndex*col+colIndex+1, r*col+c+1);
+                }
+            }
+            if (rowIndex == 0) {
+                uf.Union(0, rowIndex*col+colIndex+1);
+            }
+            else if (rowIndex == row-1) {
+                uf.Union(rowIndex*col+col+1, rowIndex*col+colIndex+1);
+            }
+            i--;
+        }
+        return i+1;
     }
 };
 
