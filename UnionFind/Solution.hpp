@@ -52,6 +52,14 @@ public:
     int getBottomParent() {
         return find(id.size()-1);
     }
+    //? Regions Cut by Slashes
+    int getTreeNum() {
+        int num = 0;
+        for (int i = 0; i < id.size(); i++) {
+            if (id[i] == i) num++;
+        }
+        return num;
+    }
 };
 
 
@@ -186,6 +194,66 @@ public:
             i--;
         }
         return i+1;
+    }
+};
+
+
+/**
+ * @brief Regions Cut by Slashes
+ * 
+ * @param grid A grid represented as a string array. An nxn grid is composed of
+ * 1x1 squares, where each 1x1 square consists of a "/", "\" or a blank space.
+ * These characters divide the square into contiguous regions
+ * 
+ * @return :int: The number of contiguous regions
+ */
+class RegionsBySlashes
+{
+private:
+    vector<string> grid;
+    unordered_map<char,int> directionIndex {
+        {'N', 0}, {'W', 1}, {'E', 2}, {'S', 3}
+    };
+public:
+    RegionsBySlashes(vector<string>& grid) : grid(grid) {}
+    int solve() {
+        int n = grid.size();
+        //* Init a 4*n*n union find list (divide a 1x1 box to 4 parts N-E-S-W)
+        UnionFind uf(4*n*n);
+        //* Traverse the grid, union based on the grid
+            // " " => Connect all 4 part
+            // "/" => Connect N-W and E-S
+            // "\" => Connect N-E and W-S
+        int box = 0;
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid[i].size(); j++) {
+                if (grid[i][j] == ' ' || grid[i][j] == '/') {
+                    uf.Union(box*4+directionIndex['N'], box*4+directionIndex['W']);
+                    uf.Union(box*4+directionIndex['E'], box*4+directionIndex['S']);
+                }
+                if (grid[i][j] == ' ' || grid[i][j] == '\\') {
+                    uf.Union(box*4+directionIndex['N'], box*4+directionIndex['E']);
+                    uf.Union(box*4+directionIndex['W'], box*4+directionIndex['S']);
+                }
+                //* Connect to neighbor boxes
+                if (j > 0) {
+                    uf.Union(box*4+directionIndex['W'], (box-1)*4+directionIndex['E']);
+                }
+                // if (j < n - 1) {
+                //     uf.Union(box*4+directionIndex['E'], (box+1)*4+directionIndex['W']);
+                // }
+                if (i > 0) {
+                    uf.Union(box*4+directionIndex['N'], (box-n)*4+directionIndex['S']);
+                }
+                // if (i < n - 1) {
+                //     uf.Union(box*4+directionIndex['S'], (box+n)*4+directionIndex['N']);
+                // }
+                box++;
+            }
+        }
+        //* Count the number of paths
+        int ans = uf.getTreeNum();
+        return ans;
     }
 };
 

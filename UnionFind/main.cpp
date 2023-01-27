@@ -51,6 +51,12 @@ vector<vector<vector<int>>> LDWYCSCCells {
 vector<pair<int,int>> LDWYCSCSize {
     {3,3},{3,4},{3,3},{2,4},{4,3}
 };
+//* Regions Cut by Slashes
+vector<vector<string>> RCSStr {
+    {"/\\", "\\/"}, {" /", "  "},
+    {" //", " \\/", "//\\"},
+    {"/ /\\", "//\\/", "  /\\", "\\\\/\\"}
+};
 
 int main(int argc, char const *argv[])
 {
@@ -67,9 +73,9 @@ int main(int argc, char const *argv[])
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (int i = 0; i < LDWYCSCCells.size(); i++) {
-        LastDayCanCross ldcc(LDWYCSCCells[i], LDWYCSCSize[i].first, LDWYCSCSize[i].second);
-        cout<< ldcc.solve() << endl;
+    for (auto s : RCSStr) {
+        RegionsBySlashes rbs(s);
+        cout << rbs.solve() << endl;
     }
     
     /* End timing */
