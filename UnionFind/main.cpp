@@ -57,6 +57,19 @@ vector<vector<string>> RCSStr {
     {" //", " \\/", "//\\"},
     {"/ /\\", "//\\/", "  /\\", "\\\\/\\"}
 };
+//* Minimum Malware Spread
+vector<vector<vector<int>>> MMSGraph {
+    {
+        {0,0,1},{1,1,0},{1,0,1}
+    },
+    {
+        {1,1,1,0,1},{1,1,1,0,1},{1,1,1,0,1},
+        {1,1,1,0,1},{1,1,1,0,1}
+    }
+};
+vector<vector<int>> MMSNode {
+    {1,2}, {2,3}
+};
 
 int main(int argc, char const *argv[])
 {
@@ -67,15 +80,15 @@ int main(int argc, char const *argv[])
     start = clock();
     
     /* Compiler switch */
-    int _switch = 1;
+    int _switch = 0;
     
     /**
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (auto s : RCSStr) {
-        RegionsBySlashes rbs(s);
-        cout << rbs.solve() << endl;
+    for (int i = 0; i < MMSGraph.size(); i++) {
+        MinMalwareSpread mms(MMSGraph[i], MMSNode[i]);
+        cout << mms.solve() << endl;
     }
     
     /* End timing */

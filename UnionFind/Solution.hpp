@@ -60,6 +60,17 @@ public:
         }
         return num;
     }
+    //? Minimum Malware Spread
+    int compareHeight(int p, int q) {
+        int rootP = find(p);
+        int rootQ = find(q);
+        if (heights[rootP] > heights[rootQ]) return p;
+        else if (heights[rootP] < heights[rootQ]) return q;
+        else {
+            if (p > q) return q;
+            else return p;
+        }
+    }
 };
 
 
@@ -253,6 +264,46 @@ public:
         }
         //* Count the number of paths
         int ans = uf.getTreeNum();
+        return ans;
+    }
+};
+
+
+/**
+ * @brief Minimize Malware Spread
+ * 
+ * @param graph A network of n nodes as an n*n adjacency matrix graph, with the ith node
+ * directly connected to the jth node if graph[i][j] == 1
+ * @param initial Some nodes are infected by a malware at the start. When two nodes are connected 
+ * directly and at least one of them is infected, then both nodes will be infected by the malware
+ * 
+ * @return :int: The node that, when removed from the initial, minimize the final number 
+ * of infected nodes with malware
+ */
+class MinMalwareSpread
+{
+private:
+    vector<vector<int>> graph;
+    vector<int> initial;
+public:
+    MinMalwareSpread(vector<vector<int>>& graph, vector<int> initial) :
+        graph(graph), initial(initial) {}
+    int solve() {
+        //* Construct an union find obj from the graph
+        UnionFind uf(graph.size());
+        for (int i = 0; i < graph.size(); i++) {
+            for (int j = 0; j < graph[j].size(); j++) {
+                if (graph[i][j] == 1) {
+                    uf.Union(i, j);
+                }
+            }
+        }
+        //* Traverse the initial 
+        //* Get the maximum height from the initial's node
+        int ans = initial[0];
+        for (int& node : initial) {
+            ans = uf.compareHeight(ans, node);
+        }
         return ans;
     }
 };
