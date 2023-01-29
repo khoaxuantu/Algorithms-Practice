@@ -308,4 +308,87 @@ public:
     }
 };
 
+
+/**
+ * @brief Evaluate Division
+ * 
+ * @param equations An array of variable pairs
+ * @param values An array of real numbers where the equations[i] = [A[i],B[i]]
+ * and values[i] represent the equation values[i] = A[i]/B[i]
+ * @param queries An array of input queries, where queries[j] = [C[j],D[j]] 
+ * represents the jth query you must find the ans for C[j]/D[j]
+ * 
+ * @return :vector<double>: the answers for all querires
+ */
+class EDUnionFind
+{
+private:
+public:
+    unordered_map<string, double> weights;
+    unordered_map<string, string> id;
+    EDUnionFind(vector<vector<string>>& input) {
+        for (int i = 0; i < input.size(); i++) {
+            for (int j = 0; j < input[i].size(); j++) {
+                if (id.count(input[i][j]) == 0) {
+                    id[input[i][j]] = input[i][j];
+                    weights[input[i][j]+"-"+input[i][j]] = 1;
+                }
+            }
+        }
+    }
+    string find(string s) {
+        double tmp = 1;
+        double reverseTmp = 1;
+        string i = s;
+        while (id[i] != i) {
+            tmp *= weights[id[i]+"-"+i];
+            reverseTmp *= weights[i+"-"+id[i]];
+            weights[id[i]+"-"+s] = tmp;
+            weights[s+"-"+id[i]] = reverseTmp;
+            i = id[i];
+        }
+        return i;
+    }
+    bool connected(string& p, string& q) {
+        return find(p) == find(q);
+    }
+    void Union(string& dividend, string& divisor, double quotient) {
+        weights[dividend+"-"+divisor] = quotient;
+        weights[divisor+"-"+dividend] = 1/quotient;
+        id[divisor] = dividend;
+    }
+};
+
+class EvaluateDivision
+{
+private:
+    vector<vector<string>> equations;
+    vector<double> values;
+    vector<vector<string>> queries;
+public:
+    EvaluateDivision(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) :
+        equations(equations), values(values), queries(queries) {}
+    vector<double> solve() {
+        vector<double> ans;
+        //* Connect the equations together using union find
+        EDUnionFind uf(equations);
+        for (int i = 0; i < equations.size(); i++) {
+            uf.Union(equations[i][0], equations[i][1], values[i]);
+        }
+        //* Traverse the queries
+            // If there is 1 entry is not in the graph ,return -1
+            // If the 2 entries are not connected, return -1
+            // Otherwise get the ans
+        for (auto& entry : queries) {
+            if (uf.id.count(entry[0]) == 0 || uf.id.count(entry[1]) == 0) ans.push_back(-1);
+            else if (!uf.connected(entry[0], entry[1])) ans.push_back(-1);
+            else {
+                if (uf.weights.count(entry[0]+"-"+entry[1]) > 0) ans.push_back(uf.weights[entry[0]+"-"+entry[1]]);
+                else ans.push_back(-100);
+            }
+        }
+        return ans;
+    }
+};
+
 #endif // SOLUTION_HPP

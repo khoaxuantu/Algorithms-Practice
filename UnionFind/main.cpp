@@ -70,6 +70,41 @@ vector<vector<vector<int>>> MMSGraph {
 vector<vector<int>> MMSNode {
     {1,2}, {2,3}
 };
+//* Evaluate Division
+vector<vector<vector<string>>> EDEquations {
+    {
+        {"a","b"},{"b","c"}
+    },
+    {
+        {"a","b"}, {"b","c"}, {"c","d"}
+    },
+    {
+        {"a","b"}
+    },
+    {
+        {"a","b"}, {"b","c"}, {"bc","cd"}
+    }
+};
+vector<vector<double>> EDValues {
+    {0.5,2.5},
+    {0.5,2.5,1.5},
+    {1.5},
+    {1.5,2.5,5.0}
+};
+vector<vector<vector<string>>> EDQueries {
+    {
+        {"a","c"},{"b","c"},{"a","e"},{"x","x"}
+    },
+    {
+        {"a","d"},{"b","d"},{"d","e"}
+    },
+    {
+        {"a","b"},{"c","b"},{"x","x"}
+    },
+    {
+        {"a","c"},{"c","b"},{"bc","cd"},{"cd","bc"}
+    }
+};
 
 int main(int argc, char const *argv[])
 {
@@ -80,15 +115,18 @@ int main(int argc, char const *argv[])
     start = clock();
     
     /* Compiler switch */
-    int _switch = 0;
+    int _switch = 1;
     
     /**
      * TODO: Modify input here
      * TODO: Print the output
      */
-    for (int i = 0; i < MMSGraph.size(); i++) {
-        MinMalwareSpread mms(MMSGraph[i], MMSNode[i]);
-        cout << mms.solve() << endl;
+    for (int i = 0; i < EDEquations.size(); i++) {
+        EvaluateDivision* ed = new EvaluateDivision(EDEquations[i], EDValues[i], EDQueries[i]);
+        for (auto n : ed->solve()) {
+            cout << n << " ";
+        } cout << endl;
+        delete ed;
     }
     
     /* End timing */
