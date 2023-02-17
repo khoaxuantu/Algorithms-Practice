@@ -1,3 +1,3 @@
 # Algorithms-Practice
 
-My preparation for coding interview
+My pattern collection for coding interview.
